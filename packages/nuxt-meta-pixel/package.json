@@ -1,14 +1,25 @@
 {
   "name": "nuxt-meta-pixel",
   "version": "0.0.0",
+  "license": "MIT",
+  "author": "tanukijs <tanuki.contact@gmail.com>",
   "description": "Nuxt wrapper for meta pixels",
+  "keywords": [
+    "meta",
+    "pixel",
+    "facebook",
+    "fbq",
+    "sdk",
+    "nuxt"
+  ],
+  "homepage": "https://github.com/tanukijs/meta-pixel#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tanukijs/meta-pixel.git"
   },
-  "author": "tanukijs <tanuki.contact@gmail.com>",
-  "homepage": "https://github.com/tanukijs/meta-pixel#readme",
-  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tanukijs/meta-pixel/issues"
+  },
   "type": "module",
   "exports": {
     ".": {
@@ -46,8 +57,5 @@
     "eslint": "^8.57.0",
     "nuxt": "^3.11.1",
     "vitest": "^1.4.0"
-  },
-  "bugs": {
-    "url": "https://github.com/tanukijs/meta-pixel/issues"
   }
 }

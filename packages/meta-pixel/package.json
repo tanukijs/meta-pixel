@@ -1,7 +1,9 @@
 {
   "name": "meta-pixel",
   "version": "0.0.0",
-  "description": "Native wrapper for meta pixels",
+  "license": "MIT",
+  "author": "tanukijs <tanuki.contact@gmail.com>",
+  "description": "Wrapper for meta pixels",
   "keywords": [
     "meta",
     "pixel",
@@ -9,24 +11,19 @@
     "fbq",
     "sdk"
   ],
-  "author": "tanukijs <tanuki.contact@gmail.com>",
   "homepage": "https://github.com/tanukijs/meta-pixel#readme",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanukijs/meta-pixel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tanukijs/meta-pixel/issues"
+  },
   "main": "lib/meta-pixel.js",
   "directories": {
     "lib": "lib"
   },
   "files": [
     "lib"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tanukijs/meta-pixel.git"
-  },
-  "scripts": {
-    "tsc": "tsc"
-  },
-  "bugs": {
-    "url": "https://github.com/tanukijs/meta-pixel/issues"
-  }
+  ]
 }
