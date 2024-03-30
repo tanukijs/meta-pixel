@@ -4231,11 +4231,6 @@ merge2@^1.3.0, merge2@^1.4.1:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
-"meta-pixel@workspace:^0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/meta-pixel/-/meta-pixel-0.0.0.tgz#d5475b67af7abe3f2c8bf53d16e1266573790fdf"
-  integrity sha512-6FJj6v5jg+on5zTkOyXI70uCJa1EUDUSg3oinWOMVJPD6ut4CjcqQsELhKdS9IvKdRUlPUDxoMTRINfP0rXcdA==
-
 micromatch@^4.0.2, micromatch@^4.0.4, micromatch@^4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.5.tgz#bc8999a7cbbf77cdc89f132f6e467051b49090c6"
