@@ -2,7 +2,9 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "./lib",
-    "lib": ["DOM"]
+    "lib": ["DOM"],
+    "module": "ES6",
+    "moduleResolution": "Bundler"
   },
   "include": ["./src"]
 }

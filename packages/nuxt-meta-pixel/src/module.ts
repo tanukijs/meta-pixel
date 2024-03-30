@@ -27,6 +27,6 @@ export default defineNuxtModule<ModuleOptions>({
       nuxt.options.app.head.noscript = scripts
     }
 
-    addPlugin(resolver.resolve('./runtime/plugin'))
+    addPlugin(resolver.resolve('./runtime/plugin.client'))
   }
 })
