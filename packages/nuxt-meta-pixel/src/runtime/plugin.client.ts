@@ -1,4 +1,4 @@
-import { defineNuxtPlugin } from '#app'
+import { defineNuxtPlugin, useRuntimeConfig, useRouter } from '#app'
 import { addScript } from 'meta-pixel'
 import type { ModuleOptions } from '../module'
 
