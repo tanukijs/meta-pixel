@@ -1,6 +1,6 @@
 {
   "name": "nuxt-meta-pixel",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "author": "tanukijs <tanuki.contact@gmail.com>",
   "description": "Nuxt wrapper for meta pixels",
@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^3.11.1",
-    "meta-pixel": "workspace:^0.0.0"
+    "meta-pixel": "^0.0.0"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
