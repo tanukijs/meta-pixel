@@ -1,5 +1,6 @@
 {
   "name": "meta-pixel",
+  "private": true,
   "description": "Wrappers for meta pixel",
   "repository": "git@github.com:tanukijs/meta-pixel.git",
   "author": "tanukijs <tanuki.contact@gmail.com>",
