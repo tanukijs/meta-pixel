@@ -1,0 +1,16 @@
+{
+  "name": "meta-pixel",
+  "private": true,
+  "description": "Wrappers for meta pixel",
+  "repository": "git@github.com:tanukijs/meta-pixel.git",
+  "author": "tanukijs <tanuki.contact@gmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "typescript": "^5.4.3"
+  }
+}
