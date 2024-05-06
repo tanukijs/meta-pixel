@@ -80,46 +80,42 @@ declare global {
   }
 }
 
-export function addScript(f: Window, b: Document, e: string, v: string, n?: any, t?: HTMLScriptElement, s?: HTMLScriptElement): Promise<FacebookQuery> {
-  return new Promise(resolve => {
-    if (f.fbq) {
-      resolve(f.fbq)
+export function addScript(f: Window, b: Document, e: string, v: string, n?: any, t?: HTMLScriptElement, s?: HTMLScriptElement): FacebookQuery {
+  if (f.fbq) { return f.fbq }
+
+  n = f.fbq = function() {
+    if (n.callMethod) {
+      // eslint-disable-next-line prefer-spread, prefer-rest-params
+      n.callMethod.apply(n, arguments)
+    } else {
+      // eslint-disable-next-line prefer-rest-params
+      n.queue.push(arguments)
     }
+  }
 
-    n = f.fbq = function() {
-      if (n.callMethod) {
-        // eslint-disable-next-line prefer-spread, prefer-rest-params
-        n.callMethod.apply(n, arguments)
-      } else {
-        // eslint-disable-next-line prefer-rest-params
-        n.queue.push(arguments)
-      }
-    }
+  if (!f._fbq) { f._fbq = n }
 
-    if (!f._fbq) { f._fbq = n }
+  n.push = n
+  n.loaded = true
+  n.version = '2.0'
+  n.queue = []
 
-    n.push = n
-    n.loaded = true
-    n.version = '2.0'
-    n.queue = []
+  t = b.createElement(e) as HTMLScriptElement
+  t.async = true
+  t.src = v
 
-    t = b.createElement(e) as HTMLScriptElement
-    t.async = true
-    t.src = v
+  s = b.getElementsByTagName(e)[0] as HTMLScriptElement
+  s.parentNode!.insertBefore(t, s)
 
-    s = b.getElementsByTagName(e)[0] as HTMLScriptElement
-    s.parentNode!.insertBefore(t, s)
-
-    t.onload = () => resolve(n)
-  })
+  return n
 }
 
 /**
  * @see {@link https://developers.facebook.com/docs/meta-pixel/get-started/}
  * @see {@link https://developers.facebook.com/docs/meta-pixel/advanced/#automatic-configuration}
  */
-export async function init(pixelId: string, autoConfig: boolean = true) {
-  const fbq = await addScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
+export function init(pixelId: string, autoConfig: boolean = true) {
+  const fbq = addScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
   fbq('set', 'autoConfig', autoConfig, pixelId)
   fbq('init', pixelId)
   fbq('trackSingle', pixelId, 'PageView')

@@ -34,7 +34,7 @@ function matchCurrentPixel({ pixels, path }: MatchCurrentPixelOptions): string |
 export default defineNuxtPlugin(async (nuxtApp) => {
   const runtimeConfig = useRuntimeConfig()
   const router = useRouter()
-  const fbq = await addScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
+  const fbq = addScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
   const opts = runtimeConfig.public.nuxtMetaPixel as ModuleOptions
 
   router.afterEach(({ path }) => {
