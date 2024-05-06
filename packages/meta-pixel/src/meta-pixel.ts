@@ -18,10 +18,10 @@ interface FacebookQueryExtra {
 
 interface EventData {
   content_category?: string
-  content_ids?: Array<string|number>
+  content_ids?: Array<string | number>
   content_name?: string
   content_type?: string
-  contents?: [{name: string, quantity: number}]
+  contents?: [{ name: string, quantity: number }]
   currency?: string
   num_items?: number
   predicted_ltv?: number
@@ -30,17 +30,17 @@ interface EventData {
   value?: number
 }
 
-type AddPaymentInfoData = Pick<EventData, 'content_category'|'content_ids'|'contents'|'currency'|'value'>
-type AddToCartData = Pick<EventData, 'content_ids'|'content_name'|'content_type'|'contents'|'currency'|'value'>
-type AddToWishlist = Pick<EventData, 'content_name'|'content_category'|'content_ids'|'contents'|'currency'|'value'>
-type CompleteRegistrationData = Pick<EventData, 'content_name'|'currency'|'status'|'value'>
-type InitiateCheckoutData = Pick<EventData, 'content_category'|'content_ids'| 'contents'|'currency'|'num_items'|'value'>
-type LeadData = Pick<EventData, 'content_category'|'content_name'|'currency'|'value'>
-type PurchaseData = Pick<EventData, 'content_ids'|'content_name'|'content_type'|'contents'|'num_items'> & Required<Pick<EventData, 'currency'|'value'>>
-type ScheduleData = Pick<EventData, 'content_category'|'content_ids'|'content_type'|'contents'|'currency'|'search_string'|'value'>
-type StartTrialData = Pick<EventData, 'currency'|'predicted_ltv'|'value'>
-type SubscribeData = Pick<EventData, 'currency'|'predicted_ltv'|'value'>
-type ViewContentData = Pick<EventData, 'content_ids'|'content_category'|'content_name'|'content_type'|'contents'|'currency'|'value'>
+type AddPaymentInfoData = Pick<EventData, 'content_category' | 'content_ids' | 'contents' | 'currency' | 'value'>
+type AddToCartData = Pick<EventData, 'content_ids' | 'content_name' | 'content_type' | 'contents' | 'currency' | 'value'>
+type AddToWishlist = Pick<EventData, 'content_name' | 'content_category' | 'content_ids' | 'contents' | 'currency' | 'value'>
+type CompleteRegistrationData = Pick<EventData, 'content_name' | 'currency' | 'status' | 'value'>
+type InitiateCheckoutData = Pick<EventData, 'content_category' | 'content_ids' | 'contents' | 'currency' | 'num_items' | 'value'>
+type LeadData = Pick<EventData, 'content_category' | 'content_name' | 'currency' | 'value'>
+type PurchaseData = Pick<EventData, 'content_ids' | 'content_name' | 'content_type' | 'contents' | 'num_items'> & Required<Pick<EventData, 'currency' | 'value'>>
+type ScheduleData = Pick<EventData, 'content_category' | 'content_ids' | 'content_type' | 'contents' | 'currency' | 'search_string' | 'value'>
+type StartTrialData = Pick<EventData, 'currency' | 'predicted_ltv' | 'value'>
+type SubscribeData = Pick<EventData, 'currency' | 'predicted_ltv' | 'value'>
+type ViewContentData = Pick<EventData, 'content_ids' | 'content_category' | 'content_name' | 'content_type' | 'contents' | 'currency' | 'value'>
 
 // @see https://developers.facebook.com/docs/meta-pixel/reference/
 interface FacebookQuery {
@@ -80,45 +80,49 @@ declare global {
   }
 }
 
-export function addScript (f: Window, b: Document, e: string, v: string, n?: any, t?: HTMLScriptElement, s?: HTMLScriptElement): FacebookQuery {
-  if (f.fbq) { return f.fbq }
-
-  n = f.fbq = function () {
-    if (n.callMethod) {
-      // eslint-disable-next-line prefer-spread, prefer-rest-params
-      n.callMethod.apply(n, arguments)
-    } else {
-      // eslint-disable-next-line prefer-rest-params
-      n.queue.push(arguments)
+export function addScript(f: Window, b: Document, e: string, v: string, n?: any, t?: HTMLScriptElement, s?: HTMLScriptElement): Promise<FacebookQuery> {
+  return new Promise(resolve => {
+    if (f.fbq) {
+      resolve(f.fbq)
     }
-  }
 
-  if (!f._fbq) { f._fbq = n }
+    n = f.fbq = function() {
+      if (n.callMethod) {
+        // eslint-disable-next-line prefer-spread, prefer-rest-params
+        n.callMethod.apply(n, arguments)
+      } else {
+        // eslint-disable-next-line prefer-rest-params
+        n.queue.push(arguments)
+      }
+    }
 
-  n.push = n
-  n.loaded = true
-  n.version = '2.0'
-  n.queue = []
+    if (!f._fbq) { f._fbq = n }
 
-  t = b.createElement(e) as HTMLScriptElement
-  t.async = true
-  t.src = v
+    n.push = n
+    n.loaded = true
+    n.version = '2.0'
+    n.queue = []
 
-  s = b.getElementsByTagName(e)[0] as HTMLScriptElement
-  s.parentNode!.insertBefore(t, s)
+    t = b.createElement(e) as HTMLScriptElement
+    t.async = true
+    t.src = v
 
-  return n
+    s = b.getElementsByTagName(e)[0] as HTMLScriptElement
+    s.parentNode!.insertBefore(t, s)
+
+    t.onload = () => resolve(n)
+  })
 }
 
 /**
  * @see {@link https://developers.facebook.com/docs/meta-pixel/get-started/}
  * @see {@link https://developers.facebook.com/docs/meta-pixel/advanced/#automatic-configuration}
  */
-export function init(pixelId: string, autoConfig: boolean = true) {
-  const fbq = addScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
+export async function init(pixelId: string, autoConfig: boolean = true) {
+  const fbq = await addScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
   fbq('set', 'autoConfig', autoConfig, pixelId)
   fbq('init', pixelId)
-  fbq('track', 'PageView')
+  fbq('trackSingle', pixelId, 'PageView')
 
   return fbq
 }
