@@ -32,6 +32,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   router.afterEach(({ path }) => {
     const matchingPixelId = getMatchingPixel(opts.pixels, path)
     if (!matchingPixelId) {
+      fbq('track', 'PageView')
       return
     }
 
