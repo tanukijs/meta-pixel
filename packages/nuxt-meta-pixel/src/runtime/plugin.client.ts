@@ -1,8 +1,7 @@
-import { Minimatch } from 'minimatch'
 import { defineNuxtPlugin, useRuntimeConfig, useRouter } from '#app'
 import { addScript } from 'meta-pixel'
 import { Minimatch } from 'minimatch'
-import type { ModuleOptions, Pixel } from '../module'
+import type { ModuleOptions, Pixel } from '../types'
 
 type FacebookQuery = ReturnType<typeof addScript>
 

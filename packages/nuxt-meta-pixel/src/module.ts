@@ -1,16 +1,5 @@
 import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
-
-export interface Pixel {
-  id: string
-  noscript?: boolean
-  autoConfig?: boolean
-  autoPageView?: string[]
-}
-
-export interface ModuleOptions {
-  pixels: Pixel[]
-}
-
+import type { ModuleOptions } from './types'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {

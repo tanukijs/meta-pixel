@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/tanukijs/meta-pixel/issues"
   },
-  "main": "src/meta-pixel.ts",
+  "main": "lib/meta-pixel.js",
   "directories": {
     "lib": "lib"
   },
