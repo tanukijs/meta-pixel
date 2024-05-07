@@ -20,10 +20,21 @@
     "url": "https://github.com/tanukijs/meta-pixel/issues"
   },
   "main": "lib/meta-pixel.js",
+  "types": "lib/meta-pixel.d.ts",
   "directories": {
     "lib": "lib"
   },
   "files": [
     "lib"
-  ]
+  ],
+  "scripts": {
+    "build": "tsc --build"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.10",
+    "typescript": "^5.4.3"
+  }
 }

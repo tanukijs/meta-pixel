@@ -57,6 +57,10 @@
     "changelogen": "^0.5.5",
     "eslint": "^8.57.0",
     "nuxt": "^3.11.1",
+    "typescript": "^5.4.5",
     "vitest": "^1.4.0"
+  },
+  "volta": {
+    "extends": "../../package.json"
   }
 }

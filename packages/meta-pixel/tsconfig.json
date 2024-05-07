@@ -4,7 +4,8 @@
     "outDir": "./lib",
     "lib": ["DOM"],
     "module": "ES6",
-    "moduleResolution": "Bundler"
+    "moduleResolution": "Bundler",
+    "sourceMap": false
   },
   "include": ["./src"]
 }

@@ -1,8 +1,7 @@
-<template>
-  <div>
-    Nuxt module playground!
-  </div>
-</template>
-
-<script setup>
+<script setup lang="ts">
+const { $fbq } = useNuxtApp()
 </script>
+
+<template>
+  <NuxtPage />
+</template>
