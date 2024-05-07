@@ -114,11 +114,11 @@ export function addScript(f: Window, b: Document, e: string, v: string, n?: any,
  * @see {@link https://developers.facebook.com/docs/meta-pixel/get-started/}
  * @see {@link https://developers.facebook.com/docs/meta-pixel/advanced/#automatic-configuration}
  */
-export function init(pixelId: string, autoConfig: boolean = true) {
+export function initSingle(pixelId: string, autoConfig: boolean = true) {
   const fbq = addScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
   fbq('set', 'autoConfig', autoConfig, pixelId)
   fbq('init', pixelId)
-  fbq('trackSingle', pixelId, 'PageView')
+  fbq('track', 'PageView')
 
   return fbq
 }

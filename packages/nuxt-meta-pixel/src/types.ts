@@ -1,7 +1,7 @@
 export interface Pixel {
   id: string
   noscript?: boolean
-  autoConfig?: boolean
+  autoconfig?: boolean
 }
 
 export interface ModuleOptions {
