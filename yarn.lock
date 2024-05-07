@@ -6153,7 +6153,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"meta-pixel@npm:0.0.0, meta-pixel@workspace:packages/meta-pixel":
+"meta-pixel@npm:^0.0.0, meta-pixel@workspace:packages/meta-pixel":
   version: 0.0.0-use.local
   resolution: "meta-pixel@workspace:packages/meta-pixel"
   dependencies:
@@ -6240,7 +6240,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^9.0.0, minimatch@npm:^9.0.1, minimatch@npm:^9.0.3, minimatch@npm:^9.0.4":
+"minimatch@npm:^9.0.0, minimatch@npm:^9.0.1, minimatch@npm:^9.0.3":
   version: 9.0.4
   resolution: "minimatch@npm:9.0.4"
   dependencies:
@@ -6847,8 +6847,7 @@ __metadata:
     "@types/node": "npm:^20.11.29"
     changelogen: "npm:^0.5.5"
     eslint: "npm:^8.57.0"
-    meta-pixel: "npm:0.0.0"
-    minimatch: "npm:^9.0.4"
+    meta-pixel: "npm:^0.0.0"
     nuxt: "npm:^3.11.1"
     typescript: "npm:^5.4.5"
     vitest: "npm:^1.4.0"

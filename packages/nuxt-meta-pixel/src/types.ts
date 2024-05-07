@@ -2,9 +2,11 @@ export interface Pixel {
   id: string
   noscript?: boolean
   autoConfig?: boolean
-  autoPageView?: string
 }
 
 export interface ModuleOptions {
-  pixels: Pixel[]
+  pixel?: Pixel
+  pixels?: Pixel[]
 }
+
+export type PluginOptions = Required<Pick<ModuleOptions, 'pixels'>>

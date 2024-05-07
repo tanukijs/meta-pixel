@@ -1,17 +1,19 @@
 import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
-import type { ModuleOptions } from './types'
+import type { ModuleOptions, PluginOptions } from './types'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'nuxt-meta-pixel',
     configKey: 'nuxtMetaPixel'
   },
-  defaults: {
-    pixels: []
-  },
   setup (options, nuxt) {
     const resolver = createResolver(import.meta.url)
-    nuxt.options.runtimeConfig.public.nuxtMetaPixel = options
+    options.pixels ??= []
+    if (options.pixel !== undefined) {
+      options.pixels.unshift(options.pixel)
+    }
+
+    nuxt.options.runtimeConfig.public.nuxtMetaPixel = options as PluginOptions
     // TODO: noscript can be string, pls don't
     const noscript = nuxt.options.app.head.noscript ?? []
 

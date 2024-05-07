@@ -45,8 +45,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^3.11.1",
-    "meta-pixel": "^0.0.0",
-    "minimatch": "^9.0.4"
+    "meta-pixel": "^0.0.0"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
