@@ -1,3 +1,4 @@
+import { Minimatch } from 'minimatch'
 import { defineNuxtPlugin, useRuntimeConfig, useRouter } from '#app'
 import { addScript } from 'meta-pixel'
 import { Minimatch } from 'minimatch'
@@ -19,7 +20,7 @@ function autoPageView (fbq: FacebookQuery, path: string, pixels: Pixel[]) {
   }
 }
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(async (nuxtApp) => {
   const runtimeConfig = useRuntimeConfig()
   const router = useRouter()
   const fbq = addScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')

@@ -11,6 +11,7 @@ export interface ModuleOptions {
   pixels: Pixel[]
 }
 
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'nuxt-meta-pixel',

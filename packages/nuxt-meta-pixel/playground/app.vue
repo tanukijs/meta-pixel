@@ -4,7 +4,5 @@ onMounted(() => console.log($fbq))
 </script>
 
 <template>
-  <div>
-    Nuxt module playground!
-  </div>
+  <NuxtPage />
 </template>
