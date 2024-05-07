@@ -2,7 +2,7 @@ export interface Pixel {
   id: string
   noscript?: boolean
   autoConfig?: boolean
-  autoPageView?: string[]
+  autoPageView?: string
 }
 
 export interface ModuleOptions {

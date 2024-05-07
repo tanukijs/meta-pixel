@@ -20,6 +20,7 @@
     "url": "https://github.com/tanukijs/meta-pixel/issues"
   },
   "main": "lib/meta-pixel.js",
+  "types": "lib/meta-pixel.d.ts",
   "directories": {
     "lib": "lib"
   },
