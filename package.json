@@ -1,5 +1,4 @@
 {
-  "name": "meta-pixel",
   "private": true,
   "description": "Wrappers for meta pixel",
   "repository": "git@github.com:tanukijs/meta-pixel.git",
@@ -8,9 +7,8 @@
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {},
-  "devDependencies": {
-    "@types/node": "^20.11.30",
-    "typescript": "^5.4.3"
+  "volta": {
+    "node": "20.12.2",
+    "yarn": "4.2.1"
   }
 }

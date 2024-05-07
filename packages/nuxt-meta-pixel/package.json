@@ -45,7 +45,8 @@
   },
   "dependencies": {
     "@nuxt/kit": "^3.11.1",
-    "meta-pixel": "^0.0.0"
+    "meta-pixel": "^0.0.0",
+    "minimatch": "^9.0.4"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
@@ -57,6 +58,10 @@
     "changelogen": "^0.5.5",
     "eslint": "^8.57.0",
     "nuxt": "^3.11.1",
+    "typescript": "^5.4.5",
     "vitest": "^1.4.0"
+  },
+  "volta": {
+    "extends": "../../package.json"
   }
 }
