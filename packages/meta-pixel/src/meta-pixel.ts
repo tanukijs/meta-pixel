@@ -118,7 +118,7 @@ export function init(pixelId: string, autoConfig: boolean = true) {
   const fbq = addScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
   fbq('set', 'autoConfig', autoConfig, pixelId)
   fbq('init', pixelId)
-  fbq('track', 'PageView')
+  fbq('trackSingle', pixelId, 'PageView')
 
   return fbq
 }
