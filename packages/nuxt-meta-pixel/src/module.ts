@@ -14,7 +14,6 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     nuxt.options.runtimeConfig.public.nuxtMetaPixel = options as PluginOptions
-    // TODO: noscript can be string, pls don't
     const noscript = nuxt.options.app.head.noscript ?? []
 
     for (const pixel of options.pixels) {
