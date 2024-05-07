@@ -43,7 +43,7 @@ type SubscribeData = Pick<EventData, 'currency' | 'predicted_ltv' | 'value'>
 type ViewContentData = Pick<EventData, 'content_ids' | 'content_category' | 'content_name' | 'content_type' | 'contents' | 'currency' | 'value'>
 
 // @see https://developers.facebook.com/docs/meta-pixel/reference/
-interface FacebookQuery {
+export interface FacebookQuery {
   (command: 'init', pixelId: string, data?: InitData): void
   (command: 'set', key: string, value1: any, value2: any): void
   (command: 'track', event: 'AddPaymentInfo', data?: AddPaymentInfoData, extra?: FacebookQueryExtra): void
@@ -64,9 +64,26 @@ interface FacebookQuery {
   (command: 'track', event: 'SubmitApplication', data?: Record<string, any>, extra?: FacebookQueryExtra): void
   (command: 'track', event: 'Subscribe', data?: SubscribeData, extra?: FacebookQueryExtra): void
   (command: 'track', event: 'ViewContent', data?: ViewContentData, extra?: FacebookQueryExtra): void
-  (command: 'trackCustom', ...args: any[]): void
-  (command: 'trackSingle', pixelId: string, ...args: any[]): void
-  (command: 'trackSingleCustom', pixelId: string, ...args: any[]): void
+  (command: 'trackCustom', event: string, data?: any): void
+  (command: 'trackSingle', pixelId: string, event: 'AddPaymentInfo', data?: AddPaymentInfoData, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'AddToCart', data?: AddToCartData, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'AddToWishlist', data?: AddToWishlist, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'CompleteRegistration', data?: CompleteRegistrationData, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'Contact', data?: Record<string, any>, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'CustomizeProduct', data?: Record<string, any>, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'Donate', data?: Record<string, any>, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'FindLocation', data?: Record<string, any>, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'InitiateCheckout', data?: InitiateCheckoutData, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'Lead', data?: LeadData, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'PageView'): void
+  (command: 'trackSingle', pixelId: string, event: 'Purchase', data: PurchaseData, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'Schedule', data: ScheduleData, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'Search', data?: Record<string, any>, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'StartTrial', data?: StartTrialData, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'SubmitApplication', data?: Record<string, any>, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'Subscribe', data?: SubscribeData, extra?: FacebookQueryExtra): void
+  (command: 'trackSingle', pixelId: string, event: 'ViewContent', data?: ViewContentData, extra?: FacebookQueryExtra): void
+  (command: 'trackSingleCustom', pixelId: string, event: string, data?: any): void
   (command: 'send', ...args: any[]): void
   (command: 'on', ...args: any[]): void
   (command: 'loadPlugin', ...args: any[]): void

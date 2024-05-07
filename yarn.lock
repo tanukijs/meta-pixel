@@ -6153,7 +6153,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"meta-pixel@npm:^0.0.0, meta-pixel@workspace:packages/meta-pixel":
+"meta-pixel@npm:^0.0.0":
+  version: 0.0.0
+  resolution: "meta-pixel@npm:0.0.0"
+  checksum: 10c0/dc7fc66d377b201119a8bb6b78e7f88f79464459d0dba9728ab315ceb151c52e2caeae560d8a92fa6eef70ac42ec400d992298e02545e13c6cbaa632dc021fa9
+  languageName: node
+  linkType: hard
+
+"meta-pixel@workspace:packages/meta-pixel":
   version: 0.0.0-use.local
   resolution: "meta-pixel@workspace:packages/meta-pixel"
   dependencies:
@@ -6846,6 +6853,7 @@ __metadata:
     "@nuxt/test-utils": "npm:^3.12.0"
     "@types/node": "npm:^20.11.29"
     changelogen: "npm:^0.5.5"
+    defu: "npm:^6.1.4"
     eslint: "npm:^8.57.0"
     meta-pixel: "npm:^0.0.0"
     nuxt: "npm:^3.11.1"

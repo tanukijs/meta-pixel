@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   modules: ['../src/module'],
-  nuxtMetaPixel: {
+  metaPixel: {
     pixels: [
       { id: '1176370652884847', noscript: true },
       { id: '415215247513663' },

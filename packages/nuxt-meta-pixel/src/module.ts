@@ -1,28 +1,46 @@
 import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
-import type { ModuleOptions, PluginOptions } from './types'
+import { defu } from 'defu'
+
+export interface Pixel {
+  id: string
+  noscript?: boolean
+  autoconfig?: boolean
+}
+
+export interface ModuleOptions {
+  pixels: Pixel[]
+}
+
+declare module 'nuxt/schema' {
+  interface PublicRuntimeConfig {
+    metaPixel: ModuleOptions
+  }
+}
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'nuxt-meta-pixel',
-    configKey: 'nuxtMetaPixel'
+    configKey: 'metaPixel'
+  },
+  defaults: {
+    pixels: []
   },
   setup (options, nuxt) {
     const resolver = createResolver(import.meta.url)
-    options.pixels ??= []
-    if (options.pixel !== undefined) {
-      options.pixels.unshift(options.pixel)
-    }
-
-    nuxt.options.runtimeConfig.public.nuxtMetaPixel = options as PluginOptions
-    const noscript = nuxt.options.app.head.noscript ?? []
-
+    const head = nuxt.options.app.head
+    head.noscript ??= []
+    
     for (const pixel of options.pixels) {
       if (pixel.noscript === true) {
-        noscript.push({ innerHTML: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${pixel.id}&ev=PageView&noscript=1"/>` })
+        head.noscript.push({ innerHTML: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${pixel.id}&ev=PageView&noscript=1"/>` })
       }
     }
     
-    nuxt.options.app.head.noscript = noscript
+    nuxt.options.runtimeConfig.public.metaPixel = defu(
+      nuxt.options.runtimeConfig.public.metaPixel,
+      options
+    )
+
     addPlugin(resolver.resolve('./runtime/plugin.client'))
   }
 })
