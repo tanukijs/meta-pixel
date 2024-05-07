@@ -25,5 +25,15 @@
   },
   "files": [
     "lib"
-  ]
+  ],
+  "scripts": {
+    "build": "tsc --build"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.10",
+    "typescript": "^5.4.3"
+  }
 }

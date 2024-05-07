@@ -1,9 +1,9 @@
 export default defineNuxtConfig({
   modules: ['../src/module'],
   nuxtMetaPixel: {
-    pixelId: '415215247513663',
     pixels: [
-      { pixelId: '415215247513664', routes: ['/about/**'] }
+      { id: '415215247513663', autoPageView: ['*'], noscript: true },
+      { id: '415215247513663', autoPageView: ['/about/**'] },
     ]
   },
   devtools: { enabled: true }
