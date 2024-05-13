@@ -1,22 +1,22 @@
-import { defineNuxtPlugin, useRuntimeConfig } from '#app'
-import { addScript } from 'meta-pixel'
+import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
+import { setup } from 'meta-pixel'
+import type { FacebookQuery } from 'meta-pixel/lib/typings'
+import type { Plugin } from 'nuxt/app'
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(() => {
   const runtimeConfig = useRuntimeConfig()
   const opts = runtimeConfig.public.metaPixel
-  const fbq = addScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
+  const { $fbq, init, pageView } = setup()
   
   for (const pixel of opts.pixels) {
-    const autoConfig = pixel.autoconfig === undefined ? true : pixel.autoconfig
-    fbq('set', 'autoConfig', autoConfig, pixel.id)
-    fbq('init', pixel.id)
+    init(pixel.id, pixel.autoconfig)
   }
 
-  fbq('track', 'PageView')
+  pageView()
 
   return {
     provide: {
-      fbq
+      fbq: $fbq
     }
   } 
-})
+}) as Plugin<{fbq: FacebookQuery}>
