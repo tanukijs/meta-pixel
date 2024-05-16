@@ -1,6 +1,5 @@
 import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
-import { setup } from 'meta-pixel'
-import type { FacebookQuery } from 'meta-pixel/lib/typings'
+import { setup, type FacebookQuery } from 'meta-pixel'
 import type { Plugin } from 'nuxt/app'
 
 export default defineNuxtPlugin(() => {

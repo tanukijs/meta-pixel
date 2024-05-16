@@ -44,6 +44,7 @@ interface FacebookQueryExtra {
 
 // @see https://developers.facebook.com/docs/meta-pixel/reference/
 export interface FacebookQuery {
+  disablePushState: boolean
   (command: 'init', pixelId: string, data?: InitData): void
   (command: 'set', key: string, value1: any, value2: any): void
   (command: 'track', event: 'AddPaymentInfo', data?: AddPaymentInfoData, extra?: FacebookQueryExtra): void

@@ -1,15 +1,6 @@
-import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
+import { addPlugin, createResolver, defineNuxtModule } from '@nuxt/kit'
 import { defu } from 'defu'
-
-export interface Pixel {
-  id: string
-  noscript?: boolean
-  autoconfig?: boolean
-}
-
-export interface ModuleOptions {
-  pixels: Pixel[]
-}
+import type { ModuleOptions } from './typings'
 
 declare module 'nuxt/schema' {
   interface PublicRuntimeConfig {
