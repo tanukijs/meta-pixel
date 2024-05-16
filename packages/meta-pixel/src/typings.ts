@@ -94,7 +94,7 @@ export interface FacebookQuery {
 export interface Setup {
   $fbq: FacebookQuery
   init(pixelId: string, autoconfig?: boolean): Setup
-  pageView(): Pick<Setup, '$fbq'>
+  pageView(pixelId?: string): Setup
 } 
 
 declare global {

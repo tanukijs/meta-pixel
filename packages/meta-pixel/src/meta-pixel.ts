@@ -43,9 +43,14 @@ export function setup($fbq: FacebookQuery = addScriptDefault()): Setup {
     return setup($fbq)
   } 
   
-  function pageView () {
-    $fbq('track', 'PageView')
-    return { $fbq }
+  function pageView (pixelId?: string) {
+    if (pixelId === undefined) {
+      $fbq('track', 'PageView')
+    } else {
+      $fbq('trackSingle', pixelId, 'PageView')
+    }
+
+    return setup($fbq)
   }
 
   return {
