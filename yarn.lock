@@ -6240,7 +6240,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^9.0.0, minimatch@npm:^9.0.1, minimatch@npm:^9.0.3":
+"minimatch@npm:^9.0.0, minimatch@npm:^9.0.1, minimatch@npm:^9.0.3, minimatch@npm:^9.0.4":
   version: 9.0.4
   resolution: "minimatch@npm:9.0.4"
   dependencies:
@@ -6849,6 +6849,7 @@ __metadata:
     defu: "npm:^6.1.4"
     eslint: "npm:^8.57.0"
     meta-pixel: "npm:^1.0.0"
+    minimatch: "npm:^9.0.4"
     nuxt: "npm:^3.11.1"
     typescript: "npm:^5.4.5"
     vitest: "npm:^1.4.0"
