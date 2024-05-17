@@ -46,7 +46,7 @@
   "dependencies": {
     "@nuxt/kit": "^3.11.1",
     "defu": "^6.1.4",
-    "meta-pixel": "^1.0.0",
+    "meta-pixel": "^1.1.0",
     "minimatch": "^9.0.4"
   },
   "devDependencies": {
