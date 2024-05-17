@@ -7,12 +7,15 @@
 
 <img src="https://raw.githubusercontent.com/tanukijs/meta-pixel/dev/events.png" style="max-width: 400px" />
 
+I needed a Facebook pixel integration for a large project, but what I found didn't meet my expectations. That's why I took the time to understand how a pixel works and developed **a unique integration that's as simple as it should be**, and **much more effective than any other integration**.
+
 ## Features
 
-<!-- Highlight some of the features your module provide here -->
-- 🤖 &nbsp;Load one or more meta pixels.
-- ⚙️ &nbsp;Automaticallly send `PageView` event based on route match.
-- 🚀 &nbsp;All tracking methods available: `track`, `trackSingle`, `trackCustom` & `trackSingleCustom`.
+- ✨ &nbsp;Written in TypeScript, even the Facebook's events are typed.
+- 🤖 &nbsp;You can load as much meta pixels as you want.
+- ⚙️ &nbsp;`PageView` event are sent automatically based on configurable route match.
+- 🚀 &nbsp;All the possibilities offered by Facebook are available: `track`, `trackSingle`, `trackCustom` & `trackSingleCustom`.
+- ❤️ &nbsp;Contributions are  welcome.
 
 ## Quick Setup
 
