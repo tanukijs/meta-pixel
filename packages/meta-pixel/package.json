@@ -1,6 +1,6 @@
 {
   "name": "meta-pixel",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "author": "tanukijs <tanuki.contact@gmail.com>",
   "description": "Wrapper for meta pixels",

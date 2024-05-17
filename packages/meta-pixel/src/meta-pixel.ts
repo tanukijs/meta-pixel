@@ -1,5 +1,7 @@
 import type { FacebookQuery, Setup } from './typings'
 
+export * from './typings'
+
 export function addScript(f: Window, b: Document, e: string, v: string, n?: any, t?: HTMLScriptElement, s?: HTMLScriptElement): FacebookQuery {
   if (f.fbq) { return f.fbq }
 
@@ -11,7 +13,7 @@ export function addScript(f: Window, b: Document, e: string, v: string, n?: any,
       // eslint-disable-next-line prefer-rest-params
       n.queue.push(arguments)
     }
-  }
+  } as unknown as FacebookQuery
 
   if (!f._fbq) { f._fbq = n }
 
@@ -41,9 +43,14 @@ export function setup($fbq: FacebookQuery = addScriptDefault()): Setup {
     return setup($fbq)
   } 
   
-  function pageView () {
-    $fbq('track', 'PageView')
-    return { $fbq }
+  function pageView (pixelId?: string) {
+    if (pixelId === undefined) {
+      $fbq('track', 'PageView')
+    } else {
+      $fbq('trackSingle', pixelId, 'PageView')
+    }
+
+    return setup($fbq)
   }
 
   return {

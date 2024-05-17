@@ -44,6 +44,7 @@ interface FacebookQueryExtra {
 
 // @see https://developers.facebook.com/docs/meta-pixel/reference/
 export interface FacebookQuery {
+  disablePushState: boolean
   (command: 'init', pixelId: string, data?: InitData): void
   (command: 'set', key: string, value1: any, value2: any): void
   (command: 'track', event: 'AddPaymentInfo', data?: AddPaymentInfoData, extra?: FacebookQueryExtra): void
@@ -93,7 +94,7 @@ export interface FacebookQuery {
 export interface Setup {
   $fbq: FacebookQuery
   init(pixelId: string, autoconfig?: boolean): Setup
-  pageView(): Pick<Setup, '$fbq'>
+  pageView(pixelId?: string): Setup
 } 
 
 declare global {
