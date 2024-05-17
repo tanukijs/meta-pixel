@@ -1,12 +1,3 @@
-<!--
-Get your module up and running quickly.
-
-Find and replace all on all files (CMD+SHIFT+F):
-- Name: My Module
-- Package name: my-module
-- Description: My new Nuxt module
--->
-
 # nuxt-meta-pixel
 
 [![Nuxt][nuxt-src]][nuxt-href]
@@ -19,10 +10,9 @@ Find and replace all on all files (CMD+SHIFT+F):
 ## Features
 
 <!-- Highlight some of the features your module provide here -->
-- ⛰ &nbsp;Load one or more meta pixels.
-- 🚠 &nbsp; configurable `noscript` & `autoconfig`.
-- 🚠 &nbsp;`PageView` event sent automatically.
-- 🌲 &nbsp;Allows you to use `track`, `trackSingle`, `trackCustom`, `trackSingleCustom` and every features of a pixel in your application.
+- 🤖 &nbsp;Load one or more meta pixels.
+- ⚙️ &nbsp;Automaticallly send `PageView` event based on route match.
+- 🚀 &nbsp;All tracking methods available: `track`, `trackSingle`, `trackCustom` & `trackSingleCustom`.
 
 ## Quick Setup
 
@@ -32,25 +22,31 @@ Install the module to your Nuxt application with one command:
 npx nuxi module add nuxt-meta-pixel
 ```
 
-That's it! You can now use My Module in your Nuxt app ✨
+That's it! You can now use `nuxt-meta-pixel` in your Nuxt app ✨
 
 ## Getting started
 
+### Pixel parameters
+- **id** `string` - your pixel id
+- **autoconfig** `boolean` (default: `true`) - enable or disable pixel autoconfig. [see more](https://developers.facebook.com/docs/meta-pixel/advanced/?locale=fr_FR)
+- **pageView** `string` (default: `**`) - glob expression to decide which route or not should send a PageView event automatically. [see more](https://www.npmjs.com/package/minimatch)
+
+### Module configuration
+The module can also be configured under the key `metaPixel`.
 ```ts
 // nuxt.config.ts
 // This example show how to load multiple pixels
 
 export default defineNuxtConfig({
   modules: [
-    'nuxt-meta-pixel'
+    ['nuxt-meta-pixel', {
+      pixels: [
+        { id: '101010100100101' },
+        { id: '445554445454554', autoconfig: false },
+        { id: '223323232323323', pageView: '/posts/**' },
+      ]
+    }]
   ],
-  metaPixel: {
-    pixels: [
-      { id: '101010100100101', noscript: true },
-      { id: '223323232323323' },
-      { id: '445554445454554', autoconfig: false },
-    ]
-  }
 })
 ```
 
@@ -60,8 +56,11 @@ export default defineNuxtConfig({
 
 <script setup lang="ts">
 const { $fbq } = useNuxtApp()
-$fbq('track', 'CompleteRegistration')
-$fbq('trackSingle', YOUR_PIXEL_ID, 'CompleteRegistration')
+
+onMounted(() => {
+  $fbq('track', 'CompleteRegistration')
+  $fbq('trackSingle', YOUR_PIXEL_ID, 'CompleteRegistration')
+})
 </script>
 
 <template>
