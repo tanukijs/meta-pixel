@@ -18,14 +18,6 @@ export default defineNuxtModule<ModuleOptions>({
   },
   setup (options, nuxt) {
     const resolver = createResolver(import.meta.url)
-    const head = nuxt.options.app.head
-    head.noscript ??= []
-    
-    for (const pixel of options.pixels) {
-      if (pixel.noscript === true) {
-        head.noscript.push({ innerHTML: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${pixel.id}&ev=PageView&noscript=1"/>` })
-      }
-    }
     
     nuxt.options.runtimeConfig.public.metaPixel = defu(
       nuxt.options.runtimeConfig.public.metaPixel,
