@@ -1,4 +1,4 @@
-import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
+import { defineNuxtPlugin, useRouter, useRuntimeConfig } from '#imports'
 import { isNavigationFailure } from '#vue-router'
 import { setup, type FacebookQuery } from 'meta-pixel'
 import { minimatch } from 'minimatch'
