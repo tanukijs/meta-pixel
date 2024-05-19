@@ -13,7 +13,8 @@ I needed a Facebook pixel integration for a large project, but what I found didn
 
 - ✨ &nbsp;Written in TypeScript, even the Facebook's events are typed.
 - 🤖 &nbsp;You can load as much meta pixels as you want.
-- ⚙️ &nbsp;`PageView` event are sent automatically based on configurable route match.
+- 📨 &nbsp;`PageView` event are sent automatically based on configurable route match.
+- ⚙️ &nbsp;Configurable via a `.env` variables.
 - 🚀 &nbsp;All the possibilities offered by Facebook are available: `track`, `trackSingle`, `trackCustom` & `trackSingleCustom`.
 - ❤️ &nbsp;Contributions are  welcome.
 
@@ -41,15 +42,16 @@ The module can also be configured under the key `metaPixel`.
 // This example show how to load multiple pixels
 
 export default defineNuxtConfig({
-  modules: [
-    ['nuxt-meta-pixel', {
-      pixels: [
-        { id: '101010100100101' },
-        { id: '445554445454554', autoconfig: false },
-        { id: '223323232323323', pageView: '/posts/**' },
-      ]
-    }]
-  ],
+  modules: ['nuxt-meta-pixel'],
+  runtimeConfig: {
+    public: {
+      metapixel: {
+        default: { id: '1176370652884847', pageView: '/posts/**' },
+        ads01: { id: '415215247513663' },
+        ads02: { id: '415215247513664', pageView: '**|!/posts/**' },
+      }
+    }
+  }
 })
 ```
 
@@ -71,6 +73,16 @@ onMounted(() => {
 </template>
 ```
 
+### Environment variables
+```env
+// .env
+// This example show how to define pixel ids via your environment variables
+NUXT_PUBLIC_METAPIXEL_DEFAULT_ID = ID1
+NUXT_PUBLIC_METAPIXEL_ADS01_ID = ID2
+NUXT_PUBLIC_METAPIXEL_ADS02_ID = ID3
+```
+
+The variable you are trying to update via an environment variable must be defined in your `nuxt.config.ts`. Replace `DEFAULT`, `ADS01` or `ADS02` by the names you defined.
 
 ## More informations
 During the development i have seen some behaviors that i need to clarify.
