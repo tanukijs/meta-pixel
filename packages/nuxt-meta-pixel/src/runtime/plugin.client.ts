@@ -6,7 +6,7 @@ import type { Plugin } from 'nuxt/app'
 
 export default defineNuxtPlugin(() => {
   const runtimeConfig = useRuntimeConfig()
-  const pixels = runtimeConfig.public.metaPixel
+  const pixels = runtimeConfig.public.metapixel
   const { $fbq, init, pageView } = setup()
   $fbq.disablePushState = true
 

@@ -4,7 +4,7 @@ import type { ModuleOptions } from './typings'
 
 declare module 'nuxt/schema' {
   interface PublicRuntimeConfig {
-    metaPixel: ModuleOptions
+    metapixel: ModuleOptions
   }
 }
 
@@ -16,8 +16,8 @@ export default defineNuxtModule<ModuleOptions>({
   setup (options, nuxt) {
     const resolver = createResolver(import.meta.url)
     
-    nuxt.options.runtimeConfig.public.metaPixel = defu(
-      nuxt.options.runtimeConfig.public.metaPixel,
+    nuxt.options.runtimeConfig.public.metapixel = defu(
+      nuxt.options.runtimeConfig.public.metapixel,
       options
     )
 
