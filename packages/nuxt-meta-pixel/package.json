@@ -1,6 +1,6 @@
 {
   "name": "nuxt-meta-pixel",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "MIT",
   "author": "tanukijs <tanuki.contact@gmail.com>",
   "description": "Nuxt wrapper for meta pixels",

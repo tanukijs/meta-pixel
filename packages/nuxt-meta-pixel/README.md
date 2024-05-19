@@ -14,7 +14,7 @@ I needed a Facebook pixel integration for a large project, but what I found didn
 - ✨ &nbsp;Written in TypeScript, even the Facebook's events are typed.
 - 🤖 &nbsp;You can load as much meta pixels as you want.
 - 📨 &nbsp;`PageView` event are sent automatically based on configurable route match.
-- ⚙️ &nbsp;Configurable via a `.env` variables.
+- ⚙️ &nbsp;Configurable via a `.env` file.
 - 🚀 &nbsp;All the possibilities offered by Facebook are available: `track`, `trackSingle`, `trackCustom` & `trackSingleCustom`.
 - ❤️ &nbsp;Contributions are  welcome.
 
@@ -29,14 +29,8 @@ npx nuxi module add nuxt-meta-pixel
 That's it! You can now use `nuxt-meta-pixel` in your Nuxt app ✨
 
 ## Getting started
-
-### Pixel parameters
-- **id** `string` - your pixel id
-- **autoconfig** `boolean` (default: `true`) - enable or disable pixel autoconfig. [see more](https://developers.facebook.com/docs/meta-pixel/advanced/?locale=fr_FR)
-- **pageView** `string` (default: `**`) - glob expression to decide which route or not should send a PageView event automatically. [see more](https://www.npmjs.com/package/minimatch)
-
 ### Module configuration
-The module can also be configured under the key `metaPixel`.
+The module can also be configured under the key `metapixel`.
 ```ts
 // nuxt.config.ts
 // This example show how to load multiple pixels
@@ -48,13 +42,30 @@ export default defineNuxtConfig({
       metapixel: {
         default: { id: '1176370652884847', pageView: '/posts/**' },
         ads01: { id: '415215247513663' },
-        ads02: { id: '415215247513664', pageView: '**|!/posts/**' },
+        ads02: { id: '415215247513664', pageView: '!/posts/**' },
       }
     }
   }
 })
 ```
 
+#### Pixel options
+- **id** `string` - your pixel id
+- **autoconfig** `boolean` (default: `true`) - enable or disable pixel autoconfig. [see more](https://developers.facebook.com/docs/meta-pixel/advanced/?locale=fr_FR)
+- **pageView** `string` (default: `**`) - glob expression to decide which route or not should send a PageView event automatically. [see more](https://www.npmjs.com/package/minimatch)
+
+### Environment variables
+```env
+// .env
+// This example show how to define pixel ids via your environment variables
+NUXT_PUBLIC_METAPIXEL_DEFAULT_ID=ID1
+NUXT_PUBLIC_METAPIXEL_ADS01_ID=ID2
+NUXT_PUBLIC_METAPIXEL_ADS02_ID=ID3
+```
+
+The variable you are trying to update via an environment variable must be defined in your `nuxt.config.ts`. Replace `DEFAULT`, `ADS01` or `ADS02` by the names you defined.
+
+### Advanced usage
 ```html
 // app.vue
 // This example show how to use fbq in your pages
@@ -72,17 +83,6 @@ onMounted(() => {
   <div>nuxt-meta-pixel</div>
 </template>
 ```
-
-### Environment variables
-```env
-// .env
-// This example show how to define pixel ids via your environment variables
-NUXT_PUBLIC_METAPIXEL_DEFAULT_ID = ID1
-NUXT_PUBLIC_METAPIXEL_ADS01_ID = ID2
-NUXT_PUBLIC_METAPIXEL_ADS02_ID = ID3
-```
-
-The variable you are trying to update via an environment variable must be defined in your `nuxt.config.ts`. Replace `DEFAULT`, `ADS01` or `ADS02` by the names you defined.
 
 ## More informations
 During the development i have seen some behaviors that i need to clarify.

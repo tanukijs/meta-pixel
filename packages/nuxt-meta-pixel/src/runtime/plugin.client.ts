@@ -12,7 +12,7 @@ export default defineNuxtPlugin(() => {
 
   for (const name in pixels) {
     const pixel = pixels[name]
-    init(pixel.id, pixel.autoconfig)
+    init(pixel.id.toString(), pixel.autoconfig)
   }
 
   const router = useRouter()
@@ -23,7 +23,7 @@ export default defineNuxtPlugin(() => {
       const pixel = pixels[name]
       const match = minimatch(to.path, pixel.pageView ?? '**')
       if (match) {
-        pageView(pixel.id)
+        pageView(pixel.id.toString())
       }
     }
   })

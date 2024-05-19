@@ -1,5 +1,5 @@
 export interface Pixel {
-  id: string
+  id: number | string
   autoconfig?: boolean
   pageView?: string
 }
