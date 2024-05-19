@@ -6,11 +6,12 @@ import type { Plugin } from 'nuxt/app'
 
 export default defineNuxtPlugin(() => {
   const runtimeConfig = useRuntimeConfig()
-  const opts = runtimeConfig.public.metaPixel
+  const pixels = runtimeConfig.public.metaPixel
   const { $fbq, init, pageView } = setup()
   $fbq.disablePushState = true
 
-  for (const pixel of opts.pixels) {
+  for (const name in pixels) {
+    const pixel = pixels[name]
     init(pixel.id, pixel.autoconfig)
   }
 
@@ -18,7 +19,8 @@ export default defineNuxtPlugin(() => {
   router.afterEach((to, _, failure) => {
     if (isNavigationFailure(failure)) return
 
-    for (const pixel of opts.pixels) {
+    for (const name in pixels) {
+      const pixel = pixels[name]
       const match = minimatch(to.path, pixel.pageView ?? '**')
       if (match) {
         pageView(pixel.id)

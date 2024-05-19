@@ -5,5 +5,5 @@ export interface Pixel {
 }
 
 export interface ModuleOptions {
-  pixels: Pixel[]
+  [name: string]: Pixel
 }
