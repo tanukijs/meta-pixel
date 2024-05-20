@@ -84,11 +84,6 @@ onMounted(() => {
 </template>
 ```
 
-## More informations
-During the development i have seen some behaviors that i need to clarify.
-- Facebook automatically track `PageView` after initializing a pixel. This behavior can't be altered.
-- On an SPA, a pixel initialized on a specific page will be active on your entire application. A pixel can't be unloaded.
-
 ## Useful resources
 - [Conversion Tracking](https://developers.facebook.com/docs/meta-pixel/implementation/conversion-tracking/?locale=fr_FR)
 - [Events](https://developers.facebook.com/docs/meta-pixel/reference/)

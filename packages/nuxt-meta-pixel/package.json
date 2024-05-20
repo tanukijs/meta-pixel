@@ -1,9 +1,9 @@
 {
   "name": "nuxt-meta-pixel",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "license": "MIT",
   "author": "tanukijs <tanuki.contact@gmail.com>",
-  "description": "Nuxt wrapper for meta pixels",
+  "description": "Nuxt best module to use Facebook's pixels in your application.",
   "keywords": [
     "meta",
     "pixel",
