@@ -13,6 +13,9 @@ export default defineNuxtModule<ModuleOptions>({
     name: 'nuxt-meta-pixel',
     configKey: 'metapixel'
   },
+  defaults: {
+    enabled: true,
+  },
   setup (options, nuxt) {
     const resolver = createResolver(import.meta.url)
     
@@ -20,6 +23,10 @@ export default defineNuxtModule<ModuleOptions>({
       nuxt.options.runtimeConfig.public.metapixel,
       options
     )
+    
+    if(!nuxt.options.runtimeConfig.public.metapixel.enabled) {
+      return
+    }
 
     // minimatch > brace-expansion
     // Ensure we transform these cjs dependencies, remove as they get converted to ejs
@@ -27,6 +34,10 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.vite.optimizeDeps.include ||= []
     nuxt.options.vite.optimizeDeps.include.push('brace-expansion')
 
-    addPlugin(resolver.resolve('./runtime/plugin.client'))
+
+    addPlugin({
+      src: resolver.resolve('./runtime/plugin.client'),
+      mode: 'client'
+    })
   }
 })

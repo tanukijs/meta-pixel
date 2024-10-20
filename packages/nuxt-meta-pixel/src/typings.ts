@@ -5,5 +5,8 @@ export interface Pixel {
 }
 
 export interface ModuleOptions {
-  [name: string]: Pixel
+  enabled?: boolean
+  pixels: {
+    [name: string]: Pixel
+  }
 }
