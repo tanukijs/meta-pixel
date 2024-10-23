@@ -34,10 +34,6 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.vite.optimizeDeps.include ||= []
     nuxt.options.vite.optimizeDeps.include.push('brace-expansion')
 
-
-    addPlugin({
-      src: resolver.resolve('./runtime/plugin.client'),
-      mode: 'client'
-    })
+    addPlugin(resolver.resolve('./runtime/plugin.client'))
   }
 })
