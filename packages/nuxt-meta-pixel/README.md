@@ -40,9 +40,12 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       metapixel: {
-        default: { id: '1176370652884847', pageView: '/posts/**' },
-        ads01: { id: '415215247513663' },
-        ads02: { id: '415215247513664', pageView: '!/posts/**' },
+        enabled: process.env.NODE_ENV === 'production',
+        pixels: {
+          default: { id: '1176370652884847', pageView: '/posts/**' },
+          ads01: { id: '415215247513663' },
+          ads02: { id: '415215247513664', pageView: '!/posts/**' },
+        }
       }
     }
   }
