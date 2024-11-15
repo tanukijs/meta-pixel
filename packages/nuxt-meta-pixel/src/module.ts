@@ -2,7 +2,7 @@ import { addPlugin, createResolver, defineNuxtModule } from '@nuxt/kit'
 import { defu } from 'defu'
 import type { ModuleOptions } from './typings'
 
-declare module 'nuxt/schema' {
+declare module '@nuxt/schema' {
   interface PublicRuntimeConfig {
     metapixel: ModuleOptions
   }
