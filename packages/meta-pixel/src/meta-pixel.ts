@@ -37,7 +37,8 @@ export function addScriptDefault() {
 }
 
 export function setup($fbq: FacebookQuery = addScriptDefault()): Setup {
-  function init (pixelId: string, autoconfig: boolean = true) {
+  function init (pixelId: string, autoconfig: boolean = true, consent: string = 'grant') {
+    $fbq('consent', consent)
     $fbq('set', 'autoConfig', autoconfig, pixelId)
     $fbq('init', pixelId)
     return setup($fbq)

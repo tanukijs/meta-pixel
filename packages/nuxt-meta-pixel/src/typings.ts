@@ -1,5 +1,6 @@
 export interface Pixel {
   id: number | string
+  consent?: string
   autoconfig?: boolean
   pageView?: string
 }

@@ -12,7 +12,7 @@ export default defineNuxtPlugin(() => {
 
   for (const name in pixels) {
     const pixel = pixels[name]
-    init(pixel.id.toString(), pixel.autoconfig)
+    init(pixel.id.toString(), pixel.autoconfig, pixel.consent)
   }
 
   const router = useRouter()
