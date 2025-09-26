@@ -78,7 +78,7 @@ export interface FacebookQuery {
 
 export interface Setup {
   $fbq: FacebookQuery
-  init(pixelId: string, autoconfig?: boolean): Setup
+  init(pixelId: string, autoconfig?: boolean, consent?: string): Setup
   pageView(pixelId?: string): Setup
 } 
 
