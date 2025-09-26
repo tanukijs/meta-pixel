@@ -54,6 +54,7 @@ export default defineNuxtConfig({
 - **id** `string` - your pixel id
 - **autoconfig** `boolean` (default: `true`) - enable or disable pixel autoconfig. [see more](https://developers.facebook.com/docs/meta-pixel/advanced/?locale=fr_FR)
 - **pageView** `string` (default: `**`) - glob expression to decide which route or not should send a PageView event automatically. [see more](https://www.npmjs.com/package/minimatch)
+- **consent** `string` (default: `grant`) - set gdpr consent. Can be `grant` or `revoke`. [see more](https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/)
 
 ### Environment variables
 ```env
