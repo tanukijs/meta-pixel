@@ -34,13 +34,14 @@ The module can also be configured under the key `metapixel`.
 ```ts
 // nuxt.config.ts
 // This example show how to load multiple pixels
+// GDPR: Set consent to 'revoke' to be GDPR compliant and grant consent through $fbq after your cookiebanner has been accepted.
 
 export default defineNuxtConfig({
   modules: ['nuxt-meta-pixel'],
   runtimeConfig: {
     public: {
       metapixel: {
-        default: { id: '1176370652884847', pageView: '/posts/**' },
+        default: { id: '1176370652884847', pageView: '/posts/**', consent: 'revoke' },
         ads01: { id: '415215247513663' },
         ads02: { id: '415215247513664', pageView: '!/posts/**' },
       }
@@ -77,6 +78,14 @@ onMounted(() => {
   $fbq('track', 'CompleteRegistration')
   $fbq('trackSingle', YOUR_PIXEL_ID, 'CompleteRegistration')
 })
+
+const cookiebannerAccepted = () => {
+  $fbq('constent', 'grant');
+}
+
+const cookiebannerRevoked = () => {
+  $fbq('consent', 'revoke');
+}
 </script>
 
 <template>
@@ -88,6 +97,7 @@ onMounted(() => {
 - [Conversion Tracking](https://developers.facebook.com/docs/meta-pixel/implementation/conversion-tracking/?locale=fr_FR)
 - [Events](https://developers.facebook.com/docs/meta-pixel/reference/)
 - [Accurate Event Tracking with Multiple Pixels](https://developers.facebook.com/ads/blog/post/v2/2017/11/28/event-tracking-with-multiple-pixels-tracksingle/)
+- [GDPR consent](https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/)
 
 
 ## Contribution
