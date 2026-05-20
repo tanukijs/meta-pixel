@@ -1,6 +1,15 @@
 export interface Pixel {
-  id: number | string
-  autoconfig?: boolean
+  /**
+   * Your pixel id. A string — pixel ids are 15-16 digits and a numeric literal
+   * can silently lose precision past `Number.MAX_SAFE_INTEGER`.
+   */
+  id: string
+  /**
+   * Enable Meta's automatic configuration. Default `true`. Matches the Meta
+   * command `fbq('set', 'autoConfig', <boolean>, <pixelId>)`.
+   * @see https://developers.facebook.com/docs/meta-pixel/advanced
+   */
+  autoConfig?: boolean
   pageView?: string
 }
 
