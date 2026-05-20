@@ -54,8 +54,31 @@ export default defineNuxtConfig({
 > **Breaking change in v3:** pixels are now nested under `metapixel.pixels`, and `consent` moved to a top-level (global) option. Previously pixels lived directly under `metapixel`.
 
 #### Module options
+- **enabled** `boolean` (default: `true`) - when `false`, the module loads and sends nothing, but still provides a no-op `$fbq` so your components keep working (see [Disable outside production](#disable-outside-production)).
 - **consent** `'revoke'` - opt into GDPR consent gating, applied to **all** pixels (see [GDPR consent](#gdpr-consent)). When omitted, pixels behave normally. [see more](https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/)
 - **pixels** `Record<string, Pixel>` - the pixels to load, keyed by an arbitrary name.
+
+### Disable outside production
+Set `enabled` to `false` to avoid loading the pixel (e.g. in development or staging) without conditionally registering the module — your components can still call `$fbq` safely, it just does nothing:
+
+```ts
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ['nuxt-meta-pixel'],
+  runtimeConfig: {
+    public: {
+      metapixel: {
+        enabled: process.env.NODE_ENV === 'production',
+        pixels: {
+          default: { id: '1176370652884847' },
+        }
+      }
+    }
+  }
+})
+```
+
+You can also flip it at runtime with the `NUXT_PUBLIC_METAPIXEL_ENABLED` environment variable.
 
 #### Pixel options
 - **id** `string` - your pixel id

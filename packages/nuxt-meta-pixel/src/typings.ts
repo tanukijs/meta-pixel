@@ -6,6 +6,13 @@ export interface Pixel {
 
 export interface ModuleOptions {
   /**
+   * When `false`, the module loads and sends nothing, but still provides a
+   * no-op `$fbq` so components calling it keep working. Handy to disable
+   * tracking outside production without conditionally registering the module.
+   * Override at runtime with `NUXT_PUBLIC_METAPIXEL_ENABLED`. Default `true`.
+   */
+  enabled?: boolean
+  /**
    * GDPR consent, applied globally to every pixel (the Meta `consent` command
    * takes no pixel id). Set `'revoke'` to hold all event delivery until you
    * grant consent at runtime via `$fbq('consent', 'grant')` (e.g. after a
