@@ -1,4 +1,4 @@
-import type { Consent, FacebookQuery, Setup } from './typings'
+import type { Consent, FacebookQuery, InitData, Setup } from './typings'
 
 export * from './typings'
 
@@ -46,9 +46,12 @@ export function setup($fbq: FacebookQuery = addScriptDefault()): Setup {
     return setup($fbq)
   }
 
-  function init (pixelId: string, autoconfig: boolean = true) {
-    $fbq('set', 'autoConfig', autoconfig, pixelId)
-    $fbq('init', pixelId)
+  // `advancedMatching` lets you pass hashed/plain customer data (email, phone, …)
+  // to Meta at init for better attribution. Every field is sent as a string.
+  // @see https://developers.facebook.com/docs/meta-pixel/advanced/advanced-matching/
+  function init (pixelId: string, autoConfig: boolean = true, advancedMatching?: InitData) {
+    $fbq('set', 'autoConfig', autoConfig, pixelId)
+    $fbq('init', pixelId, advancedMatching)
     return setup($fbq)
   }
   

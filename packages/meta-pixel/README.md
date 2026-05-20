@@ -63,7 +63,7 @@ fbq('track', 'CompleteRegistration')
 | Member | Description |
 | --- | --- |
 | `$fbq` | The underlying Facebook query function — use it for raw, fully typed calls like `$fbq('track', 'Purchase', { value: 9.99, currency: 'EUR' })`. |
-| `init(pixelId, autoConfig = true)` | Initialize a pixel. `autoConfig` maps to `fbq('set', 'autoConfig', …)`. |
+| `init(pixelId, autoConfig = true, advancedMatching?)` | Initialize a pixel. `autoConfig` maps to `fbq('set', 'autoConfig', …)`. `advancedMatching` (typed `InitData`) forwards customer data — email, phone, etc., **all strings** — for better attribution. |
 | `pageView(pixelId?)` | Send a `PageView`. With an id it uses `trackSingle`; without one it tracks every pixel. |
 | `consent('grant' \| 'revoke')` | Global GDPR consent — the command takes **no** pixel id, so it applies to all pixels. Call `'revoke'` **before** `init` to hold delivery until you grant it. |
 
@@ -75,6 +75,16 @@ import { setup } from 'meta-pixel'
 setup()
   .consent('revoke')   // hold delivery until the user opts in
   .init('pixel_01')
+  .pageView()
+```
+
+Pass advanced matching to improve attribution (every field is a string):
+
+```ts
+import { setup } from 'meta-pixel'
+
+setup()
+  .init('pixel_01', true, { em: 'jane@doe.com', ph: '16505554444', db: '19910526' })
   .pageView()
 ```
 
