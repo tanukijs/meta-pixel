@@ -1,6 +1,6 @@
 {
   "name": "nuxt-meta-pixel",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "license": "MIT",
   "author": "tanukijs <tanuki.contact@gmail.com>",
   "description": "Nuxt best module to use Facebook's pixels in your application.",
@@ -51,7 +51,7 @@
   "dependencies": {
     "@nuxt/kit": "^3.21.6",
     "defu": "^6.1.7",
-    "meta-pixel": "^1.1.0"
+    "meta-pixel": "^1.2.0"
   },
   "devDependencies": {
     "@nuxt/devtools": "^2.7.0",
