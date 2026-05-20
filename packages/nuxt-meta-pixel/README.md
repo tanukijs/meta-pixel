@@ -81,8 +81,8 @@ export default defineNuxtConfig({
 You can also flip it at runtime with the `NUXT_PUBLIC_METAPIXEL_ENABLED` environment variable.
 
 #### Pixel options
-- **id** `string` - your pixel id
-- **autoconfig** `boolean` (default: `true`) - enable or disable pixel autoconfig. [see more](https://developers.facebook.com/docs/meta-pixel/advanced/?locale=fr_FR)
+- **id** `string` - your pixel id (use a string — a numeric literal can lose precision on 15-16 digit ids)
+- **autoConfig** `boolean` (default: `true`) - enable or disable pixel auto configuration. [see more](https://developers.facebook.com/docs/meta-pixel/advanced/?locale=fr_FR)
 - **pageView** `string` (default: `**`) - glob expression to decide which route or not should send a PageView event automatically. [see more](https://www.npmjs.com/package/minimatch)
 
 ### GDPR consent
