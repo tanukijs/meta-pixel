@@ -1,7 +1,7 @@
 import { defineNuxtPlugin, useRouter, useRuntimeConfig } from '#imports'
 import { isNavigationFailure } from '#vue-router'
 import { setup, type FacebookQuery } from 'meta-pixel'
-import { minimatch } from 'minimatch'
+import { matchPath } from './glob'
 import type { Plugin } from 'nuxt/app'
 
 export default defineNuxtPlugin(() => {
@@ -21,7 +21,7 @@ export default defineNuxtPlugin(() => {
 
     for (const name in pixels) {
       const pixel = pixels[name]
-      const match = minimatch(to.path, pixel.pageView ?? '**')
+      const match = matchPath(to.path, pixel.pageView ?? '**')
       if (match) {
         pageView(pixel.id.toString())
       }
