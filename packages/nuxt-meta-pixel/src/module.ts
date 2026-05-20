@@ -11,7 +11,9 @@ declare module '@nuxt/schema' {
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'nuxt-meta-pixel',
-    configKey: 'metapixel'
+    configKey: 'metapixel',
+    // Works on Nuxt 3.7+ and Nuxt 4 — only stable Kit/runtime APIs are used.
+    compatibility: { nuxt: '>=3.7.0' }
   },
   defaults: {
     enabled: true,

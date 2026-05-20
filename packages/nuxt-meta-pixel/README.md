@@ -7,7 +7,7 @@
 
 <img src="https://raw.githubusercontent.com/tanukijs/meta-pixel/dev/events.png" style="max-width: 400px" />
 
-A Meta (Facebook) Pixel integration for Nuxt 3. Declare your pixels in config and the module loads them, sends `PageView` automatically on route changes, and exposes a fully typed `$fbq` everywhere — with first-class support for multiple pixels and GDPR consent.
+A Meta (Facebook) Pixel integration for Nuxt 3 & 4. Declare your pixels in config and the module loads them, sends `PageView` automatically on route changes, and exposes a fully typed `$fbq` everywhere — with first-class support for multiple pixels and GDPR consent.
 
 ## Features
 
