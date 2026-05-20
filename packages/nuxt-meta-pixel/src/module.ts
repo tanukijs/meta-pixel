@@ -21,12 +21,6 @@ export default defineNuxtModule<ModuleOptions>({
       options
     )
 
-    // minimatch > brace-expansion
-    // Ensure we transform these cjs dependencies, remove as they get converted to ejs
-    nuxt.options.vite.optimizeDeps ||= {}
-    nuxt.options.vite.optimizeDeps.include ||= []
-    nuxt.options.vite.optimizeDeps.include.push('brace-expansion')
-
     addPlugin(resolver.resolve('./runtime/plugin.client'))
   }
 })
