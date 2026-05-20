@@ -1,4 +1,4 @@
-import type { FacebookQuery, Setup } from './typings'
+import type { Consent, FacebookQuery, Setup } from './typings'
 
 export * from './typings'
 
@@ -37,11 +37,20 @@ export function addScriptDefault() {
 }
 
 export function setup($fbq: FacebookQuery = addScriptDefault()): Setup {
+  // `consent` is a global Meta Pixel setting (the command takes no pixel id),
+  // so it applies to every pixel. Call `consent('revoke')` BEFORE `init` to hold
+  // event delivery, then `consent('grant')` once the user has opted in.
+  // @see https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/
+  function consent (consent: Consent) {
+    $fbq('consent', consent)
+    return setup($fbq)
+  }
+
   function init (pixelId: string, autoconfig: boolean = true) {
     $fbq('set', 'autoConfig', autoconfig, pixelId)
     $fbq('init', pixelId)
     return setup($fbq)
-  } 
+  }
   
   function pageView (pixelId?: string) {
     if (pixelId === undefined) {
@@ -55,6 +64,7 @@ export function setup($fbq: FacebookQuery = addScriptDefault()): Setup {
 
   return {
     $fbq,
+    consent,
     init,
     pageView
   }

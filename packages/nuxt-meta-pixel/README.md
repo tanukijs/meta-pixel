@@ -53,6 +53,47 @@ export default defineNuxtConfig({
 - **id** `string` - your pixel id
 - **autoconfig** `boolean` (default: `true`) - enable or disable pixel autoconfig. [see more](https://developers.facebook.com/docs/meta-pixel/advanced/?locale=fr_FR)
 - **pageView** `string` (default: `**`) - glob expression to decide which route or not should send a PageView event automatically. [see more](https://www.npmjs.com/package/minimatch)
+- **consent** `'revoke'` - opt into GDPR consent gating. Set `revoke` to hold event delivery until the user opts in (see [GDPR consent](#gdpr-consent)). When omitted, the pixel behaves normally. [see more](https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/)
+
+### GDPR consent
+Meta's `consent` is a **global** setting — the command takes no pixel id, so it applies to **every** pixel at once. Concretely:
+
+- Setting `consent: 'revoke'` on **any** pixel revokes **all** pixels (the most restrictive value wins). You can't keep one pixel live while another is revoked.
+- `consent` in the config only meaningfully accepts `'revoke'` (opting into gating). Granting is done **at runtime** — tracking is allowed by default, so a config `'grant'` would be a no-op.
+
+To stay GDPR compliant, set `consent: 'revoke'` so the module revokes **before** initialization — nothing is sent to Meta until you grant consent:
+
+```ts
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ['nuxt-meta-pixel'],
+  runtimeConfig: {
+    public: {
+      metapixel: {
+        default: { id: '1176370652884847', consent: 'revoke' },
+      }
+    }
+  }
+})
+```
+
+Then grant (or re-revoke) consent at runtime once your cookie banner is answered, via the injected `$fbq`:
+
+```html
+<script setup lang="ts">
+const { $fbq } = useNuxtApp()
+
+function onCookieBannerAccepted() {
+  $fbq('consent', 'grant')
+}
+
+function onCookieBannerRejected() {
+  $fbq('consent', 'revoke')
+}
+</script>
+```
+
+> Note: on a classic multi-page (non-SPA) site Meta requires calling `revoke` on every page load — the module handles this by revoking on plugin init. [see more](https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/)
 
 ### Environment variables
 ```env
@@ -88,6 +129,7 @@ onMounted(() => {
 - [Conversion Tracking](https://developers.facebook.com/docs/meta-pixel/implementation/conversion-tracking/?locale=fr_FR)
 - [Events](https://developers.facebook.com/docs/meta-pixel/reference/)
 - [Accurate Event Tracking with Multiple Pixels](https://developers.facebook.com/ads/blog/post/v2/2017/11/28/event-tracking-with-multiple-pixels-tracksingle/)
+- [GDPR consent](https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/)
 
 
 ## Contribution

@@ -64,9 +64,13 @@ type Events = {
 
 type Args<T, E extends keyof T> = T[E] extends (...args: infer A) => void ? A : never;
 
+// @see https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/
+export type Consent = 'grant' | 'revoke'
+
 // @see https://developers.facebook.com/docs/meta-pixel/reference/
 export interface FacebookQuery {
   disablePushState: boolean;
+  (command: 'consent', consent: Consent): void
   (command: 'init', pixelId: string, data?: InitData): void
   (command: 'set', key: string, value1: any, value2: any): void
   <E extends keyof Events>(command: 'track', event: E, ...args: Args<Events, E>): void
@@ -77,9 +81,10 @@ export interface FacebookQuery {
 
 export interface Setup {
   $fbq: FacebookQuery
+  consent(consent: Consent): Setup
   init(pixelId: string, autoconfig?: boolean): Setup
   pageView(pixelId?: string): Setup
-} 
+}
 
 declare global {
   interface Window {
