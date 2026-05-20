@@ -13,6 +13,9 @@ export default defineNuxtModule<ModuleOptions>({
     name: 'nuxt-meta-pixel',
     configKey: 'metapixel'
   },
+  defaults: {
+    pixels: {}
+  },
   setup (options, nuxt) {
     const resolver = createResolver(import.meta.url)
 

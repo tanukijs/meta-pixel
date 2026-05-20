@@ -4,15 +4,13 @@ import { matchPath } from './glob'
 import type { Plugin } from 'nuxt/app'
 
 export default defineNuxtPlugin(() => {
-  const runtimeConfig = useRuntimeConfig()
-  const pixels = runtimeConfig.public.metapixel
+  const { consent: globalConsent, pixels } = useRuntimeConfig().public.metapixel
   const { $fbq, init, pageView, consent } = setup()
   $fbq.disablePushState = true
 
-  // `consent` is a global Meta setting (not per-pixel). Revoke once before any
-  // init if a pixel opts into GDPR gating, so nothing is sent until the app
-  // later calls `$fbq('consent', 'grant')`.
-  if (Object.values(pixels).some(pixel => pixel.consent === 'revoke')) {
+  // `consent` is a global Meta setting. Revoke before any init when configured,
+  // so nothing is sent until the app later calls `$fbq('consent', 'grant')`.
+  if (globalConsent === 'revoke') {
     consent('revoke')
   }
 
