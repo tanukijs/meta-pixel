@@ -8,6 +8,12 @@
 
 <img src="https://raw.githubusercontent.com/tanukijs/meta-pixel/dev/events.png" style="max-width: 400px" />
 
+## Installation
+
+```bash
+npm i meta-pixel
+```
+
 ## Usage
 ### Manually setup pixels
 ```ts
@@ -48,6 +54,28 @@ fbq('track', 'CompleteRegistration')
 ```diff
 - const fbq = metapixel.addScriptDefault()
 + const fbq = metapixel.addScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
+```
+
+## API
+
+`setup($fbq?)` returns a chainable controller. Pass your own `FacebookQuery` (e.g. from `addScriptDefault()`) or let it create one.
+
+| Member | Description |
+| --- | --- |
+| `$fbq` | The underlying Facebook query function — use it for raw, fully typed calls like `$fbq('track', 'Purchase', { value: 9.99, currency: 'EUR' })`. |
+| `init(pixelId, autoConfig = true)` | Initialize a pixel. `autoConfig` maps to `fbq('set', 'autoConfig', …)`. |
+| `pageView(pixelId?)` | Send a `PageView`. With an id it uses `trackSingle`; without one it tracks every pixel. |
+| `consent('grant' \| 'revoke')` | Global GDPR consent — the command takes **no** pixel id, so it applies to all pixels. Call `'revoke'` **before** `init` to hold delivery until you grant it. |
+
+`init`, `pageView` and `consent` are chainable (they return the controller). Standard events and their parameters are typed — e.g. `Purchase` requires `currency` and `value`, and advanced-matching fields are strings.
+
+```ts
+import { setup } from 'meta-pixel'
+
+setup()
+  .consent('revoke')   // hold delivery until the user opts in
+  .init('pixel_01')
+  .pageView()
 ```
 
 ## Resources
