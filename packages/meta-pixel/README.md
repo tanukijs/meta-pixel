@@ -14,7 +14,7 @@
 import { addScriptDefault } from 'meta-pixel'
 
 const fbq = addScriptDefault()
-fbq('set', 'autoConfig', 'pixel_01', true)
+fbq('set', 'autoConfig', true, 'pixel_01')
 fbq('init', 'pixel_01')
 fbq('track', 'PageView')
 ```

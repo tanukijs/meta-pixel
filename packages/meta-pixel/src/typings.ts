@@ -3,7 +3,9 @@ interface EventOptions {
   content_ids?: Array<string | number>
   content_name?: string
   content_type?: string
-  contents?: [{ name: string, quantity: number }]
+  // An array of items, each keyed by `id` (not `name`).
+  // @see https://developers.facebook.com/docs/meta-pixel/reference
+  contents?: Array<{ id: string, quantity: number }>
   currency?: string
   num_items?: number
   predicted_ltv?: number
@@ -12,14 +14,17 @@ interface EventOptions {
   value?: number
 }
 
+// Advanced matching. Every field is sent as a string — even digit-only ones
+// like `ph` (e.g. '16505554444') and `db` (YYYYMMDD, e.g. '19910526').
+// @see https://developers.facebook.com/docs/meta-pixel/advanced/advanced-matching
 type InitData = {
   em?: string
   fn?: string
   ln?: string
-  ph?: number
+  ph?: string
   external_id?: string
   ge?: '' | 'f' | 'm'
-  db?: number
+  db?: string
   ct?: string
   st?: string
   zp?: string
