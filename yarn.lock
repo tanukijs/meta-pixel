@@ -7422,7 +7422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"meta-pixel@npm:^1.1.0, meta-pixel@workspace:packages/meta-pixel":
+"meta-pixel@npm:^1.2.0, meta-pixel@workspace:packages/meta-pixel":
   version: 0.0.0-use.local
   resolution: "meta-pixel@workspace:packages/meta-pixel"
   dependencies:
@@ -8032,7 +8032,7 @@ __metadata:
     changelogen: "npm:^0.6.2"
     defu: "npm:^6.1.7"
     eslint: "npm:^9.39.4"
-    meta-pixel: "npm:^1.1.0"
+    meta-pixel: "npm:^1.2.0"
     nuxt: "npm:^3.21.6"
     typescript: "npm:^5.9.3"
     vitest: "npm:^4.1.6"
