@@ -14,7 +14,8 @@
   "homepage": "https://github.com/tanukijs/meta-pixel#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tanukijs/meta-pixel.git"
+    "url": "git+https://github.com/tanukijs/meta-pixel.git",
+    "directory": "packages/meta-pixel"
   },
   "bugs": {
     "url": "https://github.com/tanukijs/meta-pixel/issues"
@@ -27,8 +28,13 @@
   "files": [
     "lib"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
   "scripts": {
-    "build": "tsc --build"
+    "build": "tsc --build",
+    "prepack": "tsc --build"
   },
   "volta": {
     "extends": "../../package.json"

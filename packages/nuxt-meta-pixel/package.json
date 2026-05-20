@@ -15,10 +15,14 @@
   "homepage": "https://github.com/tanukijs/meta-pixel#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tanukijs/meta-pixel.git"
+    "url": "git+https://github.com/tanukijs/meta-pixel.git",
+    "directory": "packages/nuxt-meta-pixel"
   },
   "bugs": {
     "url": "https://github.com/tanukijs/meta-pixel/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "type": "module",
   "exports": {
