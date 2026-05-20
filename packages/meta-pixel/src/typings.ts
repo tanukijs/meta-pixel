@@ -12,7 +12,7 @@ interface EventOptions {
   value?: number
 }
 
-type InitData = {
+export type InitData = {
   em?: string
   fn?: string
   ln?: string
@@ -82,7 +82,7 @@ export interface FacebookQuery {
 export interface Setup {
   $fbq: FacebookQuery
   consent(consent: Consent): Setup
-  init(pixelId: string, autoconfig?: boolean): Setup
+  init(pixelId: string, autoconfig?: boolean, data?: InitData): Setup
   pageView(pixelId?: string): Setup
 }
 

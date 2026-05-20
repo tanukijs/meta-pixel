@@ -158,6 +158,35 @@ onMounted(() => {
 </template>
 ```
 
+### Dynamic initialization
+When your pixel IDs aren't known at build time — multi-tenant apps, IDs stored in a database or CMS — initialize them at runtime with the `useMetaPixel()` composable, after fetching your settings:
+
+```html
+<script setup lang="ts">
+const { init, $fbq } = useMetaPixel()
+
+const settings = await fetchTenantSettings()
+
+// Initialize and register the pixel; `pageView` opts it into automatic
+// route tracking (and fires a PageView now if the current route matches).
+init(settings.pixelId, {
+  advancedMatching: { em: 'user@example.com' },
+  pageView: '/shop/**',
+})
+
+// $fbq is the same instance used by config pixels
+$fbq('track', 'ViewContent')
+</script>
+```
+
+`useMetaPixel()` exposes `{ $fbq, init, pageView, consent }`. It is always safe to call: on the server (or when `enabled` is `false`) it returns a no-op controller.
+
+#### `init(id, options?)`
+- **id** `string | number` - the pixel id to initialize.
+- **options.autoConfig** `boolean` (default: `true`) - enable Meta's automatic configuration.
+- **options.advancedMatching** `InitData` - advanced matching data passed to `fbq('init', id, data)`.
+- **options.pageView** `string` (default: `**`) - glob deciding which routes auto-send a `PageView` for this pixel.
+
 ## Useful resources
 - [Conversion Tracking](https://developers.facebook.com/docs/meta-pixel/implementation/conversion-tracking/?locale=fr_FR)
 - [Events](https://developers.facebook.com/docs/meta-pixel/reference/)

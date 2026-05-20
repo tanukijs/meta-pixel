@@ -1,4 +1,4 @@
-import { addPlugin, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addImports, addPlugin, createResolver, defineNuxtModule } from '@nuxt/kit'
 import { defu } from 'defu'
 import type { ModuleOptions } from './typings'
 
@@ -30,6 +30,11 @@ export default defineNuxtModule<ModuleOptions>({
     // consumer's Vite may pre-bundle the runtime from node_modules and fail to
     // resolve the alias (#12).
     nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
+
+    addImports({
+      name: 'useMetaPixel',
+      from: resolver.resolve('./runtime/composables')
+    })
 
     addPlugin(resolver.resolve('./runtime/plugin.client'))
   }

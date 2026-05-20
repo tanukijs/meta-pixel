@@ -1,4 +1,4 @@
-import type { Consent, FacebookQuery, Setup } from './typings'
+import type { Consent, FacebookQuery, InitData, Setup } from './typings'
 
 export * from './typings'
 
@@ -46,9 +46,9 @@ export function setup($fbq: FacebookQuery = addScriptDefault()): Setup {
     return setup($fbq)
   }
 
-  function init (pixelId: string, autoconfig: boolean = true) {
+  function init (pixelId: string, autoconfig: boolean = true, data?: InitData) {
     $fbq('set', 'autoConfig', autoconfig, pixelId)
-    $fbq('init', pixelId)
+    $fbq('init', pixelId, data)
     return setup($fbq)
   }
   

@@ -1,7 +1,35 @@
+import type { Consent, FacebookQuery, InitData } from 'meta-pixel'
+
 export interface Pixel {
   id: number | string
   autoconfig?: boolean
   pageView?: string
+}
+
+/** Options for initializing a pixel at runtime via `useMetaPixel().init`. */
+export interface InitOptions {
+  /** Enable Meta's automatic configuration. Default `true`. */
+  autoConfig?: boolean
+  /** Advanced matching data passed to `fbq('init', id, data)`. */
+  advancedMatching?: InitData
+  /**
+   * Glob deciding which routes auto-send a `PageView` for this pixel (same
+   * semantics as the config `pageView`). Default `'**'`. A `PageView` also
+   * fires immediately if the current route matches.
+   */
+  pageView?: string
+}
+
+/** Runtime API exposed by `useMetaPixel()` (and `$metaPixel`). */
+export interface MetaPixelController {
+  /** The underlying Facebook query function. */
+  $fbq: FacebookQuery
+  /** Initialize a pixel at runtime (e.g. after fetching settings from an API). */
+  init(id: string | number, options?: InitOptions): void
+  /** Send a `PageView`, optionally for a single pixel. */
+  pageView(pixelId?: string): void
+  /** Set the global GDPR consent. */
+  consent(consent: Consent): void
 }
 
 export interface ModuleOptions {
