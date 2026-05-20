@@ -8,5 +8,6 @@ export default defineNuxtConfig({
       test02: { id: '415215247513664', pageView: '!/posts/**' },
     },
   },
-  devtools: { enabled: true }
+  devtools: { enabled: true },
+  compatibilityDate: '2025-07-15'
 })

@@ -7,7 +7,7 @@ A TypeScript monorepo for integrating the Meta (Facebook) Pixel into JavaScript 
 | Package | Description |
 | --- | --- |
 | [`meta-pixel`](packages/meta-pixel) | Framework-agnostic, **client-side only** TypeScript wrapper around Meta's `fbevents.js`. Typed standard events, multi-pixel, GDPR consent. |
-| [`nuxt-meta-pixel`](packages/nuxt-meta-pixel) | Nuxt 3 module built on `meta-pixel`: declare pixels in config, automatic route `PageView`, SSR-safe. |
+| [`nuxt-meta-pixel`](packages/nuxt-meta-pixel) | Nuxt 3 & 4 module built on `meta-pixel`: declare pixels in config, automatic route `PageView`, SSR-safe. |
 
 ## Development
 
