@@ -48,6 +48,52 @@ export function App({ children }: { children: React.ReactNode }) {
 
 > Define `options` outside the component (or `useMemo` it) — it is read once on mount.
 
+### Next.js (App Router)
+
+`<MetaPixelProvider>` is a Client Component (`'use client'`), so wrap it in your own client providers file and mount it in the root layout. `usePathname()` drives the automatic `PageView`:
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { usePathname } from 'next/navigation'
+import { MetaPixelProvider } from 'meta-pixel-react'
+
+const pixelOptions = {
+  pixels: { main: { id: '1234567890' } },
+} as const
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  return (
+    <MetaPixelProvider options={pixelOptions} pathname={pathname}>
+      {children}
+    </MetaPixelProvider>
+  )
+}
+```
+
+```tsx
+// app/layout.tsx (Server Component — no 'use client')
+import { Providers } from './providers'
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  )
+}
+```
+
+The provider is safe to render on the server: `fbevents.js` is only injected in a client effect, so SSR/RSC never touches `window`/`document`.
+
+> **Pages Router:** pass `pathname={router.asPath.split('?')[0]}` from `next/router`'s `useRouter()` instead of `usePathname()`.
+
+### Track events
+
 Track events anywhere below the provider:
 
 ```tsx
