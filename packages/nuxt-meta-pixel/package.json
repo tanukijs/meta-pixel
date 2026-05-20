@@ -55,15 +55,13 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "^2.7.0",
-    "@nuxt/eslint-config": "^0.2.0",
+    "@nuxt/eslint-config": "^1.15.2",
     "@nuxt/module-builder": "^1.0.2",
     "@nuxt/schema": "^3.21.6",
     "@nuxt/test-utils": "^4.0.3",
     "@types/node": "^22.18.0",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
     "changelogen": "^0.6.2",
-    "eslint": "^8.57.0",
+    "eslint": "^9.39.4",
     "nuxt": "^3.21.6",
     "typescript": "^5.9.3",
     "vitest": "^4.1.6"
