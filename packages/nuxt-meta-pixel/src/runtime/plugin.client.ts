@@ -1,5 +1,4 @@
 import { defineNuxtPlugin, useRouter, useRuntimeConfig } from '#imports'
-import { isNavigationFailure } from '#vue-router'
 import { setup, type FacebookQuery } from 'meta-pixel'
 import { matchPath } from './glob'
 import type { Plugin } from 'nuxt/app'
@@ -17,7 +16,7 @@ export default defineNuxtPlugin(() => {
 
   const router = useRouter()
   router.afterEach((to, _, failure) => {
-    if (isNavigationFailure(failure)) return
+    if (failure) return
 
     for (const name in pixels) {
       const pixel = pixels[name]
