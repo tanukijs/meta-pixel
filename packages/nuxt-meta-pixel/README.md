@@ -53,10 +53,15 @@ export default defineNuxtConfig({
 - **id** `string` - your pixel id
 - **autoconfig** `boolean` (default: `true`) - enable or disable pixel autoconfig. [see more](https://developers.facebook.com/docs/meta-pixel/advanced/?locale=fr_FR)
 - **pageView** `string` (default: `**`) - glob expression to decide which route or not should send a PageView event automatically. [see more](https://www.npmjs.com/package/minimatch)
-- **consent** `'grant' | 'revoke'` - GDPR consent. Set `revoke` to hold event delivery until the user opts in (see [GDPR consent](#gdpr-consent)). When omitted, the pixel behaves normally. [see more](https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/)
+- **consent** `'revoke'` - opt into GDPR consent gating. Set `revoke` to hold event delivery until the user opts in (see [GDPR consent](#gdpr-consent)). When omitted, the pixel behaves normally. [see more](https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/)
 
 ### GDPR consent
-Meta's `consent` is a **global** setting (it takes no pixel id), so it applies to every configured pixel. To stay GDPR compliant, set `consent: 'revoke'` on a pixel so the module revokes **before** initialization — nothing is sent to Meta until you grant consent:
+Meta's `consent` is a **global** setting — the command takes no pixel id, so it applies to **every** pixel at once. Concretely:
+
+- Setting `consent: 'revoke'` on **any** pixel revokes **all** pixels (the most restrictive value wins). You can't keep one pixel live while another is revoked.
+- `consent` in the config only meaningfully accepts `'revoke'` (opting into gating). Granting is done **at runtime** — tracking is allowed by default, so a config `'grant'` would be a no-op.
+
+To stay GDPR compliant, set `consent: 'revoke'` so the module revokes **before** initialization — nothing is sent to Meta until you grant consent:
 
 ```ts
 // nuxt.config.ts

@@ -1,14 +1,16 @@
-import type { Consent } from 'meta-pixel'
-
 export interface Pixel {
   id: number | string
   /**
-   * GDPR consent for the Meta Pixel. Set `revoke` to hold all event delivery
-   * until you call `$fbq('consent', 'grant')` (e.g. after a cookie banner is
-   * accepted). Consent is a global Meta setting, so it applies to every pixel.
+   * Opt into GDPR consent gating. Set `'revoke'` to hold event delivery until
+   * you grant consent at runtime via `$fbq('consent', 'grant')` (e.g. after a
+   * cookie banner is accepted).
+   *
+   * Consent is a GLOBAL Meta setting (the command takes no pixel id): revoking
+   * on any pixel holds *every* configured pixel, not just this one. Granting is
+   * runtime-only, so `'grant'` is not a valid config value.
    * @see https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/
    */
-  consent?: Consent
+  consent?: 'revoke'
   autoconfig?: boolean
   pageView?: string
 }
