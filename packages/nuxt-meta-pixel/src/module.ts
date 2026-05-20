@@ -14,6 +14,7 @@ export default defineNuxtModule<ModuleOptions>({
     configKey: 'metapixel'
   },
   defaults: {
+    enabled: true,
     pixels: {}
   },
   setup (options, nuxt) {

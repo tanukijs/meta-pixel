@@ -4,7 +4,15 @@ import { matchPath } from './glob'
 import type { Plugin } from 'nuxt/app'
 
 export default defineNuxtPlugin(() => {
-  const { consent: globalConsent, pixels } = useRuntimeConfig().public.metapixel
+  const { enabled = true, consent: globalConsent, pixels } = useRuntimeConfig().public.metapixel
+
+  // When disabled, load and send nothing — but still provide a no-op `$fbq` so
+  // components calling it (e.g. `$fbq('track', …)`) keep working everywhere.
+  if (!enabled) {
+    const noop = (() => {}) as unknown as FacebookQuery
+    return { provide: { fbq: noop } }
+  }
+
   const { $fbq, init, pageView, consent } = setup()
   $fbq.disablePushState = true
 
