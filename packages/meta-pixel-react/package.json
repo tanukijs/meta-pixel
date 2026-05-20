@@ -41,10 +41,15 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
   "scripts": {
     "build": "tsup",
     "test": "vitest run",
     "test:watch": "vitest watch",
+    "prepack": "tsup",
     "release": "npm run test && npm run build && changelogen --release && npm publish && git push --follow-tags"
   },
   "dependencies": {
