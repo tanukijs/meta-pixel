@@ -40,28 +40,35 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       metapixel: {
-        default: { id: '1176370652884847', pageView: '/posts/**' },
-        ads01: { id: '415215247513663' },
-        ads02: { id: '415215247513664', pageView: '!/posts/**' },
+        pixels: {
+          default: { id: '1176370652884847', pageView: '/posts/**' },
+          ads01: { id: '415215247513663' },
+          ads02: { id: '415215247513664', pageView: '!/posts/**' },
+        }
       }
     }
   }
 })
 ```
 
+> **Breaking change in v3:** pixels are now nested under `metapixel.pixels`, and `consent` moved to a top-level (global) option. Previously pixels lived directly under `metapixel`.
+
+#### Module options
+- **consent** `'revoke'` - opt into GDPR consent gating, applied to **all** pixels (see [GDPR consent](#gdpr-consent)). When omitted, pixels behave normally. [see more](https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/)
+- **pixels** `Record<string, Pixel>` - the pixels to load, keyed by an arbitrary name.
+
 #### Pixel options
 - **id** `string` - your pixel id
 - **autoconfig** `boolean` (default: `true`) - enable or disable pixel autoconfig. [see more](https://developers.facebook.com/docs/meta-pixel/advanced/?locale=fr_FR)
 - **pageView** `string` (default: `**`) - glob expression to decide which route or not should send a PageView event automatically. [see more](https://www.npmjs.com/package/minimatch)
-- **consent** `'revoke'` - opt into GDPR consent gating. Set `revoke` to hold event delivery until the user opts in (see [GDPR consent](#gdpr-consent)). When omitted, the pixel behaves normally. [see more](https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/)
 
 ### GDPR consent
-Meta's `consent` is a **global** setting — the command takes no pixel id, so it applies to **every** pixel at once. Concretely:
+Meta's `consent` is a **global** setting — the command takes no pixel id, so it applies to **every** pixel at once. It's therefore a single top-level option, not per-pixel:
 
-- Setting `consent: 'revoke'` on **any** pixel revokes **all** pixels (the most restrictive value wins). You can't keep one pixel live while another is revoked.
-- `consent` in the config only meaningfully accepts `'revoke'` (opting into gating). Granting is done **at runtime** — tracking is allowed by default, so a config `'grant'` would be a no-op.
+- `consent: 'revoke'` holds **all** pixels until you grant consent.
+- The config only accepts `'revoke'` (opting into gating). Granting is done **at runtime** — tracking is allowed by default, so a config `'grant'` would be a no-op.
 
-To stay GDPR compliant, set `consent: 'revoke'` so the module revokes **before** initialization — nothing is sent to Meta until you grant consent:
+Set `consent: 'revoke'` so the module revokes **before** initialization — nothing is sent to Meta until you grant consent:
 
 ```ts
 // nuxt.config.ts
@@ -70,7 +77,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       metapixel: {
-        default: { id: '1176370652884847', consent: 'revoke' },
+        consent: 'revoke',
+        pixels: {
+          default: { id: '1176370652884847' },
+        }
       }
     }
   }
@@ -99,9 +109,9 @@ function onCookieBannerRejected() {
 ```env
 // .env
 // This example show how to define pixel ids via your environment variables
-NUXT_PUBLIC_METAPIXEL_DEFAULT_ID=ID1
-NUXT_PUBLIC_METAPIXEL_ADS01_ID=ID2
-NUXT_PUBLIC_METAPIXEL_ADS02_ID=ID3
+NUXT_PUBLIC_METAPIXEL_PIXELS_DEFAULT_ID=ID1
+NUXT_PUBLIC_METAPIXEL_PIXELS_ADS01_ID=ID2
+NUXT_PUBLIC_METAPIXEL_PIXELS_ADS02_ID=ID3
 ```
 
 The variable you are trying to update via an environment variable must be defined in your `nuxt.config.ts`. Replace `DEFAULT`, `ADS01` or `ADS02` by the names you defined.
