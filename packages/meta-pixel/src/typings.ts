@@ -17,7 +17,7 @@ interface EventOptions {
 // Advanced matching. Every field is sent as a string — even digit-only ones
 // like `ph` (e.g. '16505554444') and `db` (YYYYMMDD, e.g. '19910526').
 // @see https://developers.facebook.com/docs/meta-pixel/advanced/advanced-matching
-type InitData = {
+export type InitData = {
   em?: string
   fn?: string
   ln?: string
@@ -87,7 +87,7 @@ export interface FacebookQuery {
 export interface Setup {
   $fbq: FacebookQuery
   consent(consent: Consent): Setup
-  init(pixelId: string, autoconfig?: boolean): Setup
+  init(pixelId: string, autoConfig?: boolean, advancedMatching?: InitData): Setup
   pageView(pixelId?: string): Setup
 }
 
