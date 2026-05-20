@@ -15,11 +15,17 @@ export default defineNuxtModule<ModuleOptions>({
   },
   setup (options, nuxt) {
     const resolver = createResolver(import.meta.url)
-    
+
     nuxt.options.runtimeConfig.public.metapixel = defu(
       nuxt.options.runtimeConfig.public.metapixel,
       options
     )
+
+    // Transpile the runtime through Nuxt's pipeline so the `#imports` virtual
+    // alias used by the plugin resolves in consuming apps. Without this, a
+    // consumer's Vite may pre-bundle the runtime from node_modules and fail to
+    // resolve the alias (#12).
+    nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
 
     addPlugin(resolver.resolve('./runtime/plugin.client'))
   }
