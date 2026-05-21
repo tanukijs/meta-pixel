@@ -5,13 +5,22 @@
   "author": "tanukijs <tanuki.contact@gmail.com>",
   "description": "React bindings for meta-pixel: an SSR-safe provider and hooks for Meta's Pixel.",
   "keywords": [
-    "meta",
-    "pixel",
-    "facebook",
-    "fbq",
-    "sdk",
     "react",
-    "hooks"
+    "react-hooks",
+    "hooks",
+    "nextjs",
+    "next",
+    "ssr",
+    "meta-pixel",
+    "facebook-pixel",
+    "meta",
+    "facebook",
+    "pixel",
+    "fbq",
+    "fbevents",
+    "conversion-tracking",
+    "tracking",
+    "analytics"
   ],
   "homepage": "https://github.com/tanukijs/meta-pixel#readme",
   "repository": {

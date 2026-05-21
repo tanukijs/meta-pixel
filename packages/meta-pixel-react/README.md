@@ -3,40 +3,50 @@
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
+[![GitHub stars][stars-src]][stars-href]
+[![React][react-src]][react-href]
 
-> React bindings for [`meta-pixel`](https://npmjs.com/package/meta-pixel): an SSR-safe provider and a typed hook for Meta's Pixel. Client-side only.
+<img src="https://raw.githubusercontent.com/tanukijs/meta-pixel/dev/events.png" style="max-width: 400px" />
 
-## Why
+> React bindings for [`meta-pixel`](https://npmjs.com/package/meta-pixel): an **SSR-safe** provider and a typed hook for Meta's Pixel. Works with Next.js (App & Pages Router), Vite, Remix, and any React 18+ app. Client-side only.
 
-Most React pixel wrappers expose a singleton you must `init` yourself in an effect, drop `window is undefined` errors during SSR, and accept untyped `track(event, data)` calls. This package gives you:
+## Contents
 
-- **`<MetaPixelProvider>`** — loads `fbevents.js` and initializes your pixels on the client only (safe to render during SSR/RSC).
-- **`useMetaPixel()`** — a typed hook; `Purchase` requires `currency`/`value`, advanced-matching fields are strings, etc. (all inherited from `meta-pixel`).
-- **Automatic `PageView`** on route change, glob-matched per pixel.
-- **GDPR consent** helper for the revoke-then-grant flow.
+- [Features](#features)
+- [Quick start](#quick-start)
+- [Why meta-pixel-react](#why-meta-pixel-react)
+- [Documentation](#documentation)
+  - [Next.js (App Router)](#nextjs-app-router)
+  - [Tracking events](#tracking-events)
+  - [GDPR consent](#gdpr-consent)
+  - [Manual page views](#manual-page-views)
+  - [API](#api)
+- [Useful links](#useful-links)
+- [License](#license)
 
-## Installation
+## Features
+
+- ✨ &nbsp;Typed events inherited from `meta-pixel` — `Purchase` requires `currency` + `value`, advanced-matching fields are strings, etc.
+- 🧩 &nbsp;Idiomatic `<MetaPixelProvider>` + `useMetaPixel()` hook — no manual `init` in an effect.
+- 🔒 &nbsp;**SSR/RSC-safe** — `fbevents.js` loads only in a client effect, never during render.
+- 📨 &nbsp;Automatic route `PageView`, glob-matched per pixel (router-agnostic).
+- 🤖 &nbsp;Multiple pixels, GDPR consent, and a global `enabled` toggle.
+
+## Quick start
 
 ```bash
 npm i meta-pixel-react
 # react >= 18 is a peer dependency
 ```
 
-## Usage
-
-Wrap your app once. Pass the current `pathname` from your router to get automatic page views:
-
 ```tsx
-import { MetaPixelProvider } from 'meta-pixel-react'
+import { MetaPixelProvider, useMetaPixel } from 'meta-pixel-react'
 
 const pixelOptions = {
-  consent: 'revoke', // optional: hold delivery until the user opts in
-  pixels: {
-    main: { id: '1234567890', pageView: '**' },
-  },
+  pixels: { main: { id: '1234567890' } },
 } as const
 
-export function App({ children }: { children: React.ReactNode }) {
+function App({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() // next/navigation, react-router, etc.
   return (
     <MetaPixelProvider options={pixelOptions} pathname={pathname}>
@@ -44,13 +54,29 @@ export function App({ children }: { children: React.ReactNode }) {
     </MetaPixelProvider>
   )
 }
+
+function BuyButton() {
+  const { $fbq } = useMetaPixel()
+  return <button onClick={() => $fbq('track', 'Purchase', { value: 9.99, currency: 'EUR' })}>Buy</button>
+}
 ```
 
 > Define `options` outside the component (or `useMemo` it) — it is read once on mount.
 
+## Why meta-pixel-react
+
+Most React pixel wrappers expose a singleton you must `init` yourself in an effect, throw `window is undefined` during SSR, and accept untyped `track(event, data)` calls. This package instead gives you:
+
+- **A real Provider + hook** instead of a manually-initialized global singleton.
+- **SSR/RSC safety by construction** — the script is injected in a client effect, so server rendering never touches `window`/`document`.
+- **Typed events** from the `meta-pixel` core, so you can't ship a malformed `Purchase`.
+- **Automatic, glob-matched page views** wired to whatever router you use.
+
+## Documentation
+
 ### Next.js (App Router)
 
-`<MetaPixelProvider>` is a Client Component (`'use client'`), so wrap it in your own client providers file and mount it in the root layout. `usePathname()` drives the automatic `PageView`:
+`<MetaPixelProvider>` is a Client Component, so wrap it in your own client providers file and mount it in the root layout. `usePathname()` drives the automatic `PageView`:
 
 ```tsx
 // app/providers.tsx
@@ -88,13 +114,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-The provider is safe to render on the server: `fbevents.js` is only injected in a client effect, so SSR/RSC never touches `window`/`document`.
-
 > **Pages Router:** pass `pathname={router.asPath.split('?')[0]}` from `next/router`'s `useRouter()` instead of `usePathname()`.
 
-### Track events
-
-Track events anywhere below the provider:
+### Tracking events
 
 ```tsx
 import { useMetaPixel } from 'meta-pixel-react'
@@ -108,6 +130,8 @@ function CheckoutButton() {
   )
 }
 ```
+
+`$fbq` is the fully-typed query function — use it for `track`, `trackCustom`, `trackSingle`, and CAPI deduplication via the 4th `eventID` arg: `$fbq('track', 'Purchase', {...}, { eventID })`.
 
 ### GDPR consent
 
@@ -125,13 +149,13 @@ Omit `pathname` to disable automatic page views and fire them yourself:
 
 ```tsx
 const { pageView } = useMetaPixel()
-pageView()           // every pixel
-pageView('1234567890') // a single pixel (uses trackSingle)
+pageView()              // every pixel
+pageView('1234567890')  // a single pixel (uses trackSingle)
 ```
 
-## API
+### API
 
-### `<MetaPixelProvider options pathname?>`
+#### `<MetaPixelProvider options pathname?>`
 
 | Prop | Description |
 | --- | --- |
@@ -140,19 +164,27 @@ pageView('1234567890') // a single pixel (uses trackSingle)
 
 `options.pixels` is keyed by an arbitrary name; each pixel is `{ id, autoConfig?, advancedMatching?, pageView? }`. `enabled: false` loads and sends nothing while keeping `useMetaPixel()` working (no-op `$fbq`).
 
-### `useMetaPixel()`
+#### `useMetaPixel()`
 
-Returns `{ $fbq, consent, pageView }`. `$fbq` is the fully-typed query function from `meta-pixel` — use it for `track`, `trackCustom`, `trackSingle`, and CAPI deduplication via the 4th `eventID` arg: `$fbq('track', 'Purchase', {...}, { eventID })`.
+Returns `{ $fbq, consent, pageView }`. `$fbq` carries the full event typing from `meta-pixel`.
 
-### `pageView` globs
+#### `pageView` globs
 
 Patterns use `meta-pixel`'s in-house matcher: `**`, `*`, `?`, and a leading `!`. No brace/char-class expansion.
 
-## Resources
+## Useful links
 
-- Core library: https://npmjs.com/package/meta-pixel
-- Pixel reference: https://developers.facebook.com/docs/meta-pixel/reference
-- Advanced matching: https://developers.facebook.com/docs/meta-pixel/advanced/advanced-matching
+- [`meta-pixel`](https://npmjs.com/package/meta-pixel) — the framework-agnostic core
+- [`nuxt-meta-pixel`](https://npmjs.com/package/nuxt-meta-pixel) — the Nuxt module
+- [Pixel events & parameters](https://developers.facebook.com/docs/meta-pixel/reference)
+- [Advanced matching](https://developers.facebook.com/docs/meta-pixel/advanced/advanced-matching)
+- [GDPR consent](https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/)
+
+## License
+
+[MIT](https://github.com/tanukijs/meta-pixel/blob/dev/LICENSE) © [tanukijs](https://github.com/tanukijs)
+
+If this saved you some time, consider [starring the repo](https://github.com/tanukijs/meta-pixel) ⭐ — it helps others find it.
 
 <!-- Badges -->
 [npm-version-src]: https://img.shields.io/npm/v/meta-pixel-react/latest.svg?style=flat&colorA=020420&colorB=00DC82
@@ -163,3 +195,9 @@ Patterns use `meta-pixel`'s in-house matcher: `**`, `*`, `?`, and a leading `!`.
 
 [license-src]: https://img.shields.io/npm/l/meta-pixel-react.svg?style=flat&colorA=020420&colorB=00DC82
 [license-href]: https://npmjs.com/package/meta-pixel-react
+
+[stars-src]: https://img.shields.io/github/stars/tanukijs/meta-pixel?style=flat&colorA=020420&colorB=00DC82
+[stars-href]: https://github.com/tanukijs/meta-pixel
+
+[react-src]: https://img.shields.io/badge/React-020420?style=flat&logo=react&logoColor=00DC82
+[react-href]: https://react.dev
