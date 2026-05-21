@@ -10,11 +10,18 @@
 
 > A tiny, fully-typed wrapper around Meta's `fbevents.js`. Framework-agnostic and **client-side only** — the typed core behind [`nuxt-meta-pixel`](https://npmjs.com/package/nuxt-meta-pixel) and [`meta-pixel-react`](https://npmjs.com/package/meta-pixel-react).
 
+## Why meta-pixel
+
+Meta ships `fbevents.js` as an untyped global `fbq()`. This package wraps it so you get:
+
+- **Type safety** for the bits that are easy to get wrong — `Purchase` won't compile without `currency`/`value`, advanced-matching fields are strings (so leading zeros on phone numbers survive), and `contents` uses the documented `{ id, quantity }` shape.
+- **A small, chainable API** instead of stringly-typed positional `fbq()` calls.
+- **No runtime weight** — it's a thin wrapper, not a framework.
+
 ## Contents
 
 - [Features](#features)
 - [Quick start](#quick-start)
-- [Why meta-pixel](#why-meta-pixel)
 - [Documentation](#documentation)
 - [Useful links](#useful-links)
 - [License](#license)
@@ -44,14 +51,6 @@ const { $fbq } = setup()
 // Standard events are fully typed:
 $fbq('track', 'Purchase', { value: 9.99, currency: 'EUR' })
 ```
-
-## Why meta-pixel
-
-Meta ships `fbevents.js` as an untyped global `fbq()`. This package wraps it so you get:
-
-- **Type safety** for the bits that are easy to get wrong — `Purchase` won't compile without `currency`/`value`, advanced-matching fields are strings (so leading zeros on phone numbers survive), and `contents` uses the documented `{ id, quantity }` shape.
-- **A small, chainable API** instead of stringly-typed positional `fbq()` calls.
-- **No runtime weight** — it's a thin wrapper, not a framework.
 
 ## Documentation
 

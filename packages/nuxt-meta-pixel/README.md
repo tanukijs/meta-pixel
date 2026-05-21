@@ -10,11 +10,19 @@
 
 > A Meta (Facebook) Pixel module for **Nuxt 3 & 4**. Declare your pixels in config; the module loads them, sends `PageView` automatically on route changes, and exposes a fully-typed `$fbq` everywhere — with first-class support for multiple pixels and GDPR consent.
 
+## Why nuxt-meta-pixel
+
+Wiring the Meta Pixel into Nuxt by hand means a client-only plugin, manual route tracking, and an untyped global. This module gives you:
+
+- **Config-driven pixels** — declare them in `nuxt.config.ts` (or via env vars), including multiple pixels with per-pixel route matching.
+- **Automatic, glob-matched `PageView`** on navigation, SSR-safe by construction.
+- **A typed `$fbq`** injected everywhere, backed by [`meta-pixel`](https://npmjs.com/package/meta-pixel).
+- **GDPR-correct consent** — handled as a single global setting, the way Meta actually implements it.
+
 ## Contents
 
 - [Features](#features)
 - [Quick start](#quick-start)
-- [Why nuxt-meta-pixel](#why-nuxt-meta-pixel)
 - [Documentation](#documentation)
   - [Module configuration](#module-configuration)
   - [Module options](#module-options)
@@ -64,15 +72,6 @@ export default defineNuxtConfig({
 ```
 
 That's it — `PageView` is now sent on every route change ✨
-
-## Why nuxt-meta-pixel
-
-Wiring the Meta Pixel into Nuxt by hand means a client-only plugin, manual route tracking, and an untyped global. This module gives you:
-
-- **Config-driven pixels** — declare them in `nuxt.config.ts` (or via env vars), including multiple pixels with per-pixel route matching.
-- **Automatic, glob-matched `PageView`** on navigation, SSR-safe by construction.
-- **A typed `$fbq`** injected everywhere, backed by [`meta-pixel`](https://npmjs.com/package/meta-pixel).
-- **GDPR-correct consent** — handled as a single global setting, the way Meta actually implements it.
 
 ## Documentation
 

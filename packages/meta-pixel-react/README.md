@@ -10,11 +10,19 @@
 
 > React bindings for [`meta-pixel`](https://npmjs.com/package/meta-pixel): an **SSR-safe** provider and a typed hook for Meta's Pixel. Works with Next.js (App & Pages Router), Vite, Remix, and any React 18+ app. Client-side only.
 
+## Why meta-pixel-react
+
+Most React pixel wrappers expose a singleton you must `init` yourself in an effect, throw `window is undefined` during SSR, and accept untyped `track(event, data)` calls. This package instead gives you:
+
+- **A real Provider + hook** instead of a manually-initialized global singleton.
+- **SSR/RSC safety by construction** — the script is injected in a client effect, so server rendering never touches `window`/`document`.
+- **Typed events** from the `meta-pixel` core, so you can't ship a malformed `Purchase`.
+- **Automatic, glob-matched page views** wired to whatever router you use.
+
 ## Contents
 
 - [Features](#features)
 - [Quick start](#quick-start)
-- [Why meta-pixel-react](#why-meta-pixel-react)
 - [Documentation](#documentation)
   - [Next.js (App Router)](#nextjs-app-router)
   - [Tracking events](#tracking-events)
@@ -62,15 +70,6 @@ function BuyButton() {
 ```
 
 > Define `options` outside the component (or `useMemo` it) — it is read once on mount.
-
-## Why meta-pixel-react
-
-Most React pixel wrappers expose a singleton you must `init` yourself in an effect, throw `window is undefined` during SSR, and accept untyped `track(event, data)` calls. This package instead gives you:
-
-- **A real Provider + hook** instead of a manually-initialized global singleton.
-- **SSR/RSC safety by construction** — the script is injected in a client effect, so server rendering never touches `window`/`document`.
-- **Typed events** from the `meta-pixel` core, so you can't ship a malformed `Purchase`.
-- **Automatic, glob-matched page views** wired to whatever router you use.
 
 ## Documentation
 
