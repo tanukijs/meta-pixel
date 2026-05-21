@@ -53,7 +53,7 @@
     "release": "npm run test && npm run build && changelogen --release && npm publish && git push --follow-tags"
   },
   "dependencies": {
-    "meta-pixel": "workspace:^"
+    "meta-pixel": "^2.0.0"
   },
   "peerDependencies": {
     "react": ">=18"
