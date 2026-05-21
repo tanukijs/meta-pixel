@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "author": "tanukijs <tanuki.contact@gmail.com>",
-  "description": "React bindings for meta-pixel: an SSR-safe provider and hooks for Meta's Pixel.",
+  "description": "React bindings for the Meta Pixel (Facebook Pixel): an SSR-safe provider, a typed useMetaPixel() hook and automatic route PageView. Works with Next.js, Vite and React 18+.",
   "keywords": [
     "react",
     "react-hooks",

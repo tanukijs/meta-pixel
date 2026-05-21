@@ -12,12 +12,16 @@
 
 ## Why meta-pixel-react
 
+`meta-pixel-react` integrates the **Meta Pixel** — also known as the **Facebook Pixel**, `fbq`, or `fbevents.js` — into **React** and **Next.js**, with multiple pixels, advanced matching, and GDPR consent.
+
 Most React pixel wrappers expose a singleton you must `init` yourself in an effect, throw `window is undefined` during SSR, and accept untyped `track(event, data)` calls. This package instead gives you:
 
 - **A real Provider + hook** instead of a manually-initialized global singleton.
 - **SSR/RSC safety by construction** — the script is injected in a client effect, so server rendering never touches `window`/`document`.
 - **Typed events** from the `meta-pixel` core, so you can't ship a malformed `Purchase`.
 - **Automatic, glob-matched page views** wired to whatever router you use.
+
+**When to use this:** any React 18+ app — Next.js (App & Pages Router), Vite, Remix. For a plain JavaScript/TypeScript app use [`meta-pixel`](https://npmjs.com/package/meta-pixel); for **Nuxt** use [`nuxt-meta-pixel`](https://npmjs.com/package/nuxt-meta-pixel).
 
 ## Contents
 

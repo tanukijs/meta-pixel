@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "license": "MIT",
   "author": "tanukijs <tanuki.contact@gmail.com>",
-  "description": "Nuxt best module to use Facebook's pixels in your application.",
+  "description": "Nuxt 3 & 4 module for the Meta Pixel (Facebook Pixel): declare pixels in config, automatic route PageView, a typed $fbq, multi-pixel and GDPR consent. SSR-safe.",
   "keywords": [
     "nuxt",
     "nuxt-module",

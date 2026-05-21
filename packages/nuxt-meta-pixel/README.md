@@ -12,12 +12,16 @@
 
 ## Why nuxt-meta-pixel
 
+`nuxt-meta-pixel` integrates the **Meta Pixel** — also known as the **Facebook Pixel**, `fbq`, or `fbevents.js` — into **Nuxt 3 & 4**, with multiple pixels, advanced matching, and GDPR consent.
+
 Wiring the Meta Pixel into Nuxt by hand means a client-only plugin, manual route tracking, and an untyped global. This module gives you:
 
 - **Config-driven pixels** — declare them in `nuxt.config.ts` (or via env vars), including multiple pixels with per-pixel route matching.
 - **Automatic, glob-matched `PageView`** on navigation, SSR-safe by construction.
 - **A typed `$fbq`** injected everywhere, backed by [`meta-pixel`](https://npmjs.com/package/meta-pixel).
 - **GDPR-correct consent** — handled as a single global setting, the way Meta actually implements it.
+
+**When to use this:** Nuxt 3 or Nuxt 4 applications. For a plain JavaScript/TypeScript app use [`meta-pixel`](https://npmjs.com/package/meta-pixel); for **React / Next.js** use [`meta-pixel-react`](https://npmjs.com/package/meta-pixel-react).
 
 ## Contents
 

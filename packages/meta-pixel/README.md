@@ -12,11 +12,15 @@
 
 ## Why meta-pixel
 
+`meta-pixel` is a typed wrapper for the **Meta Pixel** — also known as the **Facebook Pixel**, `fbq`, or `fbevents.js`. It covers standard events, multiple pixels (`trackSingle`), advanced matching, Conversions API (CAPI) deduplication via `eventID`, and GDPR consent.
+
 Meta ships `fbevents.js` as an untyped global `fbq()`. This package wraps it so you get:
 
 - **Type safety** for the bits that are easy to get wrong — `Purchase` won't compile without `currency`/`value`, advanced-matching fields are strings (so leading zeros on phone numbers survive), and `contents` uses the documented `{ id, quantity }` shape.
 - **A small, chainable API** instead of stringly-typed positional `fbq()` calls.
 - **No runtime weight** — it's a thin wrapper, not a framework.
+
+**When to use this:** any JavaScript/TypeScript app where you integrate the Meta Pixel directly (no framework, or your own setup). On **Nuxt**, use [`nuxt-meta-pixel`](https://npmjs.com/package/nuxt-meta-pixel); in **React / Next.js**, use [`meta-pixel-react`](https://npmjs.com/package/meta-pixel-react) — both are built on this core.
 
 ## Contents
 
