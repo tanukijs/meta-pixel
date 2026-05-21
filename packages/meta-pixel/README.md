@@ -3,94 +3,138 @@
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
-
-> TypeScript implementation of the facebook's pixel script. This is a client-side only library.
+[![GitHub stars][stars-src]][stars-href]
+[![TypeScript][ts-src]][ts-href]
 
 <img src="https://raw.githubusercontent.com/tanukijs/meta-pixel/dev/events.png" style="max-width: 400px" />
 
-## Installation
+> A tiny, fully-typed wrapper around Meta's `fbevents.js`. Framework-agnostic and **client-side only** — the typed core behind [`nuxt-meta-pixel`](https://npmjs.com/package/nuxt-meta-pixel) and [`meta-pixel-react`](https://npmjs.com/package/meta-pixel-react).
+
+## Why meta-pixel
+
+`meta-pixel` is a typed wrapper for the **Meta Pixel** — also known as the **Facebook Pixel**, `fbq`, or `fbevents.js`. It covers standard events, multiple pixels (`trackSingle`), advanced matching, Conversions API (CAPI) deduplication via `eventID`, and GDPR consent.
+
+Meta ships `fbevents.js` as an untyped global `fbq()`. This package wraps it so you get:
+
+- **Type safety** for the bits that are easy to get wrong — `Purchase` won't compile without `currency`/`value`, advanced-matching fields are strings (so leading zeros on phone numbers survive), and `contents` uses the documented `{ id, quantity }` shape.
+- **A small, chainable API** instead of stringly-typed positional `fbq()` calls.
+- **No runtime weight** — it's a thin wrapper, not a framework.
+
+**When to use this:** any JavaScript/TypeScript app where you integrate the Meta Pixel directly (no framework, or your own setup). On **Nuxt**, use [`nuxt-meta-pixel`](https://npmjs.com/package/nuxt-meta-pixel); in **React / Next.js**, use [`meta-pixel-react`](https://npmjs.com/package/meta-pixel-react) — both are built on this core.
+
+## Contents
+
+- [Features](#features)
+- [Quick start](#quick-start)
+- [Documentation](#documentation)
+- [Useful links](#useful-links)
+- [License](#license)
+
+## Features
+
+- ✨ &nbsp;Written in TypeScript — even Meta's standard events are typed (`Purchase` requires `currency` + `value`, `contents` is `{ id, quantity }[]`, …).
+- 🤖 &nbsp;Load as many pixels as you want; `trackSingle` / `trackSingleCustom` supported.
+- 🧩 &nbsp;Chainable `setup()` API — `init`, `pageView`, `consent`.
+- 🔐 &nbsp;GDPR consent built in (global `revoke` / `grant`).
+- 🎯 &nbsp;Advanced matching at init, and CAPI deduplication via `eventID`.
+- 🪶 &nbsp;Zero dependencies, no framework lock-in.
+
+## Quick start
 
 ```bash
 npm i meta-pixel
 ```
 
-## Usage
-### Manually setup pixels
-```ts
-import { addScriptDefault } from 'meta-pixel'
-
-const fbq = addScriptDefault()
-fbq('set', 'autoConfig', true, 'pixel_01')
-fbq('init', 'pixel_01')
-fbq('track', 'PageView')
-```
-
-### Using setup & multi pixels
 ```ts
 import { setup } from 'meta-pixel'
 
 const { $fbq } = setup()
-  .init('pixel_01')
-  .init('pixel_02', false)
+  .init('1234567890')
   .pageView()
 
-$fbq('track', 'CompleteRegistration')
+// Standard events are fully typed:
+$fbq('track', 'Purchase', { value: 9.99, currency: 'EUR' })
 ```
 
-### Combining both
-```ts
-import { addScriptDefault, setup } from 'meta-pixel'
+## Documentation
 
-const fbq = addScriptDefault()
-setup(fbq)
-  .init('pixel_01')
-  .init('pixel_02')
-  .pageView()
-
-fbq('track', 'CompleteRegistration')
-```
-
-### Manually define fbevents script
-```diff
-- const fbq = metapixel.addScriptDefault()
-+ const fbq = metapixel.addScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
-```
-
-## API
+### Setting up pixels
 
 `setup($fbq?)` returns a chainable controller. Pass your own `FacebookQuery` (e.g. from `addScriptDefault()`) or let it create one.
-
-| Member | Description |
-| --- | --- |
-| `$fbq` | The underlying Facebook query function — use it for raw, fully typed calls like `$fbq('track', 'Purchase', { value: 9.99, currency: 'EUR' })`. |
-| `init(pixelId, autoConfig = true, advancedMatching?)` | Initialize a pixel. `autoConfig` maps to `fbq('set', 'autoConfig', …)`. `advancedMatching` (typed `InitData`) forwards customer data — email, phone, etc., **all strings** — for better attribution. |
-| `pageView(pixelId?)` | Send a `PageView`. With an id it uses `trackSingle`; without one it tracks every pixel. |
-| `consent('grant' \| 'revoke')` | Global GDPR consent — the command takes **no** pixel id, so it applies to all pixels. Call `'revoke'` **before** `init` to hold delivery until you grant it. |
-
-`init`, `pageView` and `consent` are chainable (they return the controller). Standard events and their parameters are typed — e.g. `Purchase` requires `currency` and `value`, and advanced-matching fields are strings.
 
 ```ts
 import { setup } from 'meta-pixel'
 
 setup()
-  .consent('revoke')   // hold delivery until the user opts in
   .init('pixel_01')
+  .init('pixel_02', false)   // disable autoConfig
   .pageView()
 ```
 
-Pass advanced matching to improve attribution (every field is a string):
+| Member | Description |
+| --- | --- |
+| `$fbq` | The underlying, fully-typed Facebook query function — use it for raw calls like `$fbq('track', 'Purchase', { value: 9.99, currency: 'EUR' })`. |
+| `init(pixelId, autoConfig = true, advancedMatching?)` | Initialize a pixel. `autoConfig` maps to `fbq('set', 'autoConfig', …)`. `advancedMatching` (typed `InitData`) forwards customer data — email, phone, etc., **all strings** — for better attribution. |
+| `pageView(pixelId?)` | Send a `PageView`. With an id it uses `trackSingle`; without one it tracks every pixel. |
+| `consent('grant' \| 'revoke')` | Global GDPR consent — the command takes **no** pixel id, so it applies to all pixels. Call `'revoke'` **before** `init` to hold delivery until you grant it. |
+
+`init`, `pageView` and `consent` are chainable (they return the controller).
+
+### Advanced matching
 
 ```ts
-import { setup } from 'meta-pixel'
-
 setup()
   .init('pixel_01', true, { em: 'jane@doe.com', ph: '16505554444', db: '19910526' })
   .pageView()
 ```
 
-## Resources
-- https://developers.facebook.com/docs/meta-pixel/get-started/
-- https://developers.facebook.com/docs/meta-pixel/advanced/#automatic-configuration
+Every field is a **string** — including digit-only `ph` and `db` (`YYYYMMDD`) — so leading zeros are preserved.
+
+### GDPR consent
+
+```ts
+setup()
+  .consent('revoke')   // hold delivery until the user opts in
+  .init('pixel_01')
+  .pageView()
+
+// later, once the cookie banner is accepted:
+$fbq('consent', 'grant')
+```
+
+### CAPI deduplication
+
+`eventID` is the 4th positional argument, so the same event sent from the browser and the Conversions API is de-duplicated:
+
+```ts
+$fbq('track', 'Purchase', { value: 9.99, currency: 'EUR' }, { eventID: 'order_123' })
+```
+
+### Manual setup
+
+```ts
+import { addScriptDefault, setup } from 'meta-pixel'
+
+const fbq = addScriptDefault()
+setup(fbq).init('pixel_01').pageView()
+```
+
+To control the script URL yourself, use `addScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')`.
+
+## Useful links
+
+- [Pixel events & parameters](https://developers.facebook.com/docs/meta-pixel/reference)
+- [Advanced matching](https://developers.facebook.com/docs/meta-pixel/advanced/advanced-matching)
+- [autoConfig / automatic configuration](https://developers.facebook.com/docs/meta-pixel/advanced/#automatic-configuration)
+- [GDPR consent](https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/)
+- [`nuxt-meta-pixel`](https://npmjs.com/package/nuxt-meta-pixel) — the Nuxt module
+- [`meta-pixel-react`](https://npmjs.com/package/meta-pixel-react) — the React bindings
+
+## License
+
+[MIT](https://github.com/tanukijs/meta-pixel/blob/dev/LICENSE) © [tanukijs](https://github.com/tanukijs)
+
+If this saved you some time, consider [starring the repo](https://github.com/tanukijs/meta-pixel) ⭐ — it helps others find it.
 
 <!-- Badges -->
 [npm-version-src]: https://img.shields.io/npm/v/meta-pixel/latest.svg?style=flat&colorA=020420&colorB=00DC82
@@ -101,3 +145,9 @@ setup()
 
 [license-src]: https://img.shields.io/npm/l/meta-pixel.svg?style=flat&colorA=020420&colorB=00DC82
 [license-href]: https://npmjs.com/package/meta-pixel
+
+[stars-src]: https://img.shields.io/github/stars/tanukijs/meta-pixel?style=flat&colorA=020420&colorB=00DC82
+[stars-href]: https://github.com/tanukijs/meta-pixel
+
+[ts-src]: https://img.shields.io/badge/TypeScript-020420?style=flat&logo=typescript&logoColor=00DC82
+[ts-href]: https://www.typescriptlang.org

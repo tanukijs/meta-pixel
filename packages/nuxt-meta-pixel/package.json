@@ -3,14 +3,24 @@
   "version": "3.0.0",
   "license": "MIT",
   "author": "tanukijs <tanuki.contact@gmail.com>",
-  "description": "Nuxt best module to use Facebook's pixels in your application.",
+  "description": "Nuxt 3 & 4 module for the Meta Pixel (Facebook Pixel): declare pixels in config, automatic route PageView, a typed $fbq, multi-pixel and GDPR consent. SSR-safe.",
   "keywords": [
+    "nuxt",
+    "nuxt-module",
+    "nuxt3",
+    "nuxt4",
+    "vue",
+    "meta-pixel",
+    "facebook-pixel",
     "meta",
-    "pixel",
     "facebook",
+    "pixel",
     "fbq",
-    "sdk",
-    "nuxt"
+    "fbevents",
+    "conversion-tracking",
+    "tracking",
+    "analytics",
+    "gdpr"
   ],
   "homepage": "https://github.com/tanukijs/meta-pixel#readme",
   "repository": {
