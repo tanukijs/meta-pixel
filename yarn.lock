@@ -8082,7 +8082,7 @@ __metadata:
     "@types/react": "npm:^18.3.0"
     "@types/react-dom": "npm:^18.3.0"
     jsdom: "npm:^25.0.0"
-    meta-pixel: "workspace:^"
+    meta-pixel: "npm:^2.0.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     tsup: "npm:^8.3.0"
@@ -8093,7 +8093,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"meta-pixel@npm:^1.2.0, meta-pixel@workspace:^, meta-pixel@workspace:packages/meta-pixel":
+"meta-pixel@npm:^2.0.0, meta-pixel@workspace:packages/meta-pixel":
   version: 0.0.0-use.local
   resolution: "meta-pixel@workspace:packages/meta-pixel"
   dependencies:
@@ -8718,7 +8718,7 @@ __metadata:
     changelogen: "npm:^0.6.2"
     defu: "npm:^6.1.7"
     eslint: "npm:^9.39.4"
-    meta-pixel: "npm:^1.2.0"
+    meta-pixel: "npm:^2.0.0"
     nuxt: "npm:^4.0.0"
     typescript: "npm:^5.9.3"
     vitest: "npm:^4.1.6"

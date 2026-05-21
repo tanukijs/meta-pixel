@@ -1,5 +1,29 @@
 # Changelog
 
+## v3.0.0
+
+### Breaking
+- **Config restructured.** `ModuleOptions` is now `{ enabled?, consent?, pixels }`
+  where `pixels` is a `Record<string, Pixel>` map. The previous flat shape and
+  per-pixel `consent` field are gone — `consent` is now a single global option
+  (`'revoke'`), matching Meta's global consent command. Runtime env vars become
+  `NUXT_PUBLIC_METAPIXEL_PIXELS_<NAME>_ID`.
+  ([#30](https://github.com/tanukijs/meta-pixel/pull/30))
+- **Pixel config tightened**: `autoConfig` casing and string pixel ids enforced.
+  ([#34](https://github.com/tanukijs/meta-pixel/pull/34))
+
+### Added
+- Global `enabled` toggle (default `true`). When `false` the module loads and
+  sends nothing but still provides a no-op `$fbq`. Override at runtime with
+  `NUXT_PUBLIC_METAPIXEL_ENABLED`.
+  ([#31](https://github.com/tanukijs/meta-pixel/pull/31), [#15](https://github.com/tanukijs/meta-pixel/issues/15), [#16](https://github.com/tanukijs/meta-pixel/issues/16))
+- **Nuxt 4 support** while keeping Nuxt 3 compatibility.
+  ([#36](https://github.com/tanukijs/meta-pixel/pull/36))
+
+### Changed
+- Bump the `meta-pixel` dependency to `^2.0.0`.
+- Packaging: add `publishConfig`, `repository.directory`, and a bundled `LICENSE`.
+
 ## v2.1.0
 
 ### Added
